@@ -39,10 +39,10 @@ public class Test {
     @NotNull
     private String testTitle;
 
-    // 회원 아이디
+    // [FK] 회원 아이디
     @Column(name = "member_id")
     @NotNull
-    private String memberId;
+    private Long memberId;
 
     // 테스트 제작일
     @Column(name = "test_date")
