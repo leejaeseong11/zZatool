@@ -1,5 +1,8 @@
 package com.timekiller.zzatool.test.entity;
 
+import com.timekiller.zzatool.hashtag.entity.Hashtag;
+import com.timekiller.zzatool.result.entity.ResultView;
+import com.timekiller.zzatool.testhashtag.entity.TestHashtag;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
@@ -11,6 +14,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,4 +71,8 @@ public class Test {
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "test_id")
     private List<Quiz> quizList;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "test_id")
+    private List<TestHashtag> hashtagList;
 }

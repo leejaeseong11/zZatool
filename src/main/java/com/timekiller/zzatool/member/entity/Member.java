@@ -1,10 +1,19 @@
+package com.timekiller.zzatool.member.entity;
 
+import jakarta.persistence.*;
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Builder
+@Setter
 @Entity
 @Table(name = "member")
 public class Member{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
-    private Long id;
+    private Long memberId;
 
     @Column(nullable = false)
     private String email;
@@ -16,5 +25,5 @@ public class Member{
     private String password;
 
     @Column(nullable = false)
-    Integer member_status;
+    Integer memberStatus;
 }
