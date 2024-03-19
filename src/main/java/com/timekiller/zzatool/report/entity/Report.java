@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.report.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.sql.Timestamp;
@@ -18,12 +19,15 @@ public class Report{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_seq_generator")
     private Long reportId;
 
-    @Column(name= "quiz_id",nullable = false)
+    @Column(name= "quiz_id")
+    @NotNull
     private Long quizId;
 
-    @Column(name = "report_reason",nullable = false)
+    @Column(name = "report_reason")
+    @NotNull
     private String reportReason;
 
-    @Column(name = "report_date",nullable = false)
+    @Column(name = "report_date")
+    @NotNull
     private Timestamp reportDate;
 }

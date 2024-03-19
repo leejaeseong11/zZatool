@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.member.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @NoArgsConstructor
@@ -16,15 +17,19 @@ public class Member{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
     private Long memberId;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email")
+    @NotNull
     private String email;
 
-    @Column(name = "nickname", nullable = false)
+    @Column(name = "nickname")
+    @NotNull
     private String nickname;
 
-    @Column(name = "password",nullable = false)
+    @Column(name = "password")
+    @NotNull
     private String password;
 
-    @Column(name = "member_status",nullable = false)
+    @Column(name = "member_status")
+    @NotNull
     Integer memberStatus;
 }
