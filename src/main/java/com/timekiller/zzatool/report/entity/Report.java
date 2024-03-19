@@ -14,15 +14,16 @@ import java.sql.Timestamp;
 @Table(name = "report")
 public class Report{
     @Id
+    @Column(name = "report_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_seq_generator")
     private Long reportId;
 
-    @Column(nullable = false)
+    @Column(name= "quiz_id",nullable = false)
     private Long quizId;
 
-    @Column(nullable = false)
+    @Column(name = "report_reason",nullable = false)
     private String reportReason;
 
-    @Column(nullable = false)
+    @Column(name = "report_date",nullable = false)
     private Timestamp reportDate;
 }

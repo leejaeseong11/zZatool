@@ -12,18 +12,19 @@ import lombok.*;
 @Table(name = "member")
 public class Member{
     @Id
+    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
     private Long memberId;
 
-    @Column(nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "nickname", nullable = false)
     private String nickname;
 
-    @Column(nullable = false)
+    @Column(name = "password",nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(name = "member_status",nullable = false)
     Integer memberStatus;
 }

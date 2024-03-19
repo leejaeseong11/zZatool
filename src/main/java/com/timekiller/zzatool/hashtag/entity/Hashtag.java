@@ -1,10 +1,7 @@
 package com.timekiller.zzatool.hashtag.entity;
 
 import com.timekiller.zzatool.test.entity.Test;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -16,6 +13,7 @@ import java.util.List;
 @Table(name = "hashtag")
 public class Hashtag{
     @Id
+    @Column(name = "tag_content")
     private String tagContent;
 
 }
