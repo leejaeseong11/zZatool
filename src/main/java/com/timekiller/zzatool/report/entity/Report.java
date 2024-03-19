@@ -1,5 +1,6 @@
 package com.timekiller.zzatool.report.entity;
 
+import com.timekiller.zzatool.test.entity.Quiz;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -19,9 +20,10 @@ public class Report{
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_seq_generator")
     private Long reportId;
 
-    @Column(name= "quiz_id")
+    @ManyToOne
+    @JoinColumn(name= "quiz_id")
     @NotNull
-    private Long quizId;
+    private Quiz quiz;
 
     @Column(name = "report_reason")
     @NotNull
