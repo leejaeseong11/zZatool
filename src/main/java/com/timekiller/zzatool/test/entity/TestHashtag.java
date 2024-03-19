@@ -1,17 +1,22 @@
-package com.timekiller.zzatool.testhashtag.entity;
+package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.io.Serializable;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Builder
-@Embeddable
-public class TestHashtagKey implements Serializable {
+@Entity
+@Table(name="test_hashtag")
+public class TestHashtag {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="test_hashtag_id")
+    private Long testHashtagId;
+
     @Column(name = "test_id")
     @NotNull
     private Long testId;

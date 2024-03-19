@@ -17,7 +17,7 @@ import java.sql.Timestamp;
 public class Report{
     @Id
     @Column(name = "report_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
 
     @ManyToOne

@@ -1,8 +1,5 @@
 package com.timekiller.zzatool.test.entity;
 
-import com.timekiller.zzatool.hashtag.entity.Hashtag;
-import com.timekiller.zzatool.result.entity.ResultView;
-import com.timekiller.zzatool.testhashtag.entity.TestHashtag;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +11,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,17 +21,12 @@ import java.util.List;
 @Entity
 @Table(name = "Test")
 @DynamicInsert
-@SequenceGenerator(
-        name = "test_no_seq_generator",
-        sequenceName = "test_no_seq",
-        initialValue = 1,
-        allocationSize = 1)
 /* 테스트 Entity */
 public class Test {
     // [PK] 테스트 아이디
     @Id
     @Column(name = "test_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "test_no_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testId;
 
     // 테스트 제목

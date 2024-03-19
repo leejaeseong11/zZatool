@@ -14,7 +14,7 @@ import lombok.*;
 public class Member{
     @Id
     @Column(name = "member_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "member_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
     @Column(name = "email")

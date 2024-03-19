@@ -15,17 +15,12 @@ import org.hibernate.annotations.DynamicInsert;
 @Entity
 @Table(name = "View")
 @DynamicInsert
-@SequenceGenerator(
-        name = "view_no_seq_generator",
-        sequenceName = "view_no_seq",
-        initialValue = 1,
-        allocationSize = 1)
 /* 보기 Entity */
 public class View {
     // [PK] 보기 아이디
     @Id
     @Column(name = "view_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "view_no_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long viewId;
 
     // 보기 내용
