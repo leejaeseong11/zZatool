@@ -1,9 +1,15 @@
-name: google-java-format
+name: Format
 on: [ pull_request ]
 jobs:
   formatting:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
@@ -12,30 +18,3 @@ jobs:
         with:
           args: "--replace --aosp"
           commit-message: "style: reformat by google-java-format"
-
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: 'temurin'
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          arguments: build
-          cache-read-only: ${{ github.ref != 'refs/heads/main' && github.ref != 'refs/heads/develop' }}
-
-      - name: Upload Jacoco Report
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: jacoco-report
-          path: build/reports/jacoco/test/html
