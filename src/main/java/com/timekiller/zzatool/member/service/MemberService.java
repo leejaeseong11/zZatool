@@ -1,4 +1,3 @@
 package com.timekiller.zzatool.member.service;
 
-public interface MemberService {
-}
+public interface MemberService {}
