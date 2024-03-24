@@ -1,3 +1,3 @@
 package com.timekiller.zzatool.test.service;
 
-public class TestService {}
+public interface TestService {}
