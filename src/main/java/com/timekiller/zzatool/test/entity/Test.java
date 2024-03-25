@@ -1,8 +1,8 @@
 package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
-
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,17 +21,12 @@ import java.util.List;
 @Entity
 @Table(name = "Test")
 @DynamicInsert
-@SequenceGenerator(
-        name = "test_no_seq_generator",
-        sequenceName = "test_no_seq",
-        initialValue = 1,
-        allocationSize = 1)
 /* 테스트 Entity */
 public class Test {
     // [PK] 테스트 아이디
     @Id
     @Column(name = "test_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "test_no_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long testId;
 
     // 테스트 제목
@@ -67,4 +62,8 @@ public class Test {
     @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "test_id")
     private List<Quiz> quizList;
+
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "test_id")
+    private List<TestHashtag> hashtagList;
 }

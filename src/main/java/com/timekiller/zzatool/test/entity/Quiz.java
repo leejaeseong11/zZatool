@@ -2,10 +2,12 @@ package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -18,17 +20,12 @@ import java.util.List;
 @Entity
 @Table(name = "Quiz")
 @DynamicInsert
-@SequenceGenerator(
-        name = "quiz_no_seq_generator",
-        sequenceName = "quiz_no_seq",
-        initialValue = 1,
-        allocationSize = 1)
 /* 문제 Entity */
 public class Quiz {
     // [PK] 문제 아이디
     @Id
     @Column(name = "quiz_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quiz_no_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
 
     // 문제 내용
@@ -57,6 +54,6 @@ public class Quiz {
 
     // 보기 목록
     @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name="quiz_id")
+    @JoinColumn(name = "quiz_id")
     private List<View> viewList;
 }

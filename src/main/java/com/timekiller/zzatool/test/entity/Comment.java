@@ -1,11 +1,13 @@
 package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.NotNull;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -18,17 +20,12 @@ import java.util.Date;
 @Entity
 @Table(name = "Comment")
 @DynamicInsert
-@SequenceGenerator(
-        name = "comment_no_seq_generator",
-        sequenceName = "comment_no_seq",
-        initialValue = 1,
-        allocationSize = 1)
 /* 댓글 Entity */
 public class Comment {
     // [PK] 댓글 아이디
     @Id
     @Column(name = "comment_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_no_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;
 
     // [FK] 테스트 아이디

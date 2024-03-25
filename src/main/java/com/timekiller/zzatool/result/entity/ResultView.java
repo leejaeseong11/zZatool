@@ -1,22 +1,33 @@
 package com.timekiller.zzatool.result.entity;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "ResultView")
-@DynamicInsert
-/* 결과 보기 Entity */
+@Table(name = "result_view")
 public class ResultView {
-    @EmbeddedId private ResultViewKey id = new ResultViewKey();
+    // [FK] 결과 아이디
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "result_view_id")
+    private Long resultViewId;
+
+    @Column(name = "result_id")
+    @NotNull
+    private Long resultId;
+
+    // [FK] 보기 아이디
+    @Column(name = "view_id")
+    @NotNull
+    private Long viewId;
 }

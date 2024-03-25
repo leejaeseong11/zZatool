@@ -2,10 +2,12 @@ package com.timekiller.zzatool.result.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -19,17 +21,12 @@ import java.util.List;
 @Entity
 @Table(name = "Result")
 @DynamicInsert
-@SequenceGenerator(
-        name = "result_no_seq_generator",
-        sequenceName = "result_no_seq",
-        initialValue = 1,
-        allocationSize = 1)
 /* 결과 Entity */
 public class Result {
     // [PK] 결과 아이디
     @Id
     @Column(name = "result_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "result_no_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resultId;
 
     // 결과 점수
