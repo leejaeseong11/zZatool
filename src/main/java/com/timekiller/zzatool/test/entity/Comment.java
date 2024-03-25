@@ -40,11 +40,11 @@ public class Comment {
 
     // 작성자 닉네임
     @Column(name = "comment_writer")
-    @ColumnDefault(value = "익명")
+    //    @ColumnDefault(value = "익명")
     private String commentWriter;
 
     // 댓글 작성일
     @Column(name = "comment_date")
-    @ColumnDefault(value = "sysdate()")
+    //    @ColumnDefault(value = "sysdate()")
     private Date commentDate;
 }

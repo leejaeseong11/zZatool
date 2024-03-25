@@ -28,6 +28,9 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
 
+    @Column(name = "quiz_no")
+    private Integer quizNo;
+
     // 문제 내용
     @Column(name = "quiz_content")
     @NotNull

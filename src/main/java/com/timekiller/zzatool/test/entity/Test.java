@@ -41,7 +41,7 @@ public class Test {
 
     // 테스트 제작일
     @Column(name = "test_date")
-    @ColumnDefault(value = "sysdate()")
+    //    @ColumnDefault(value = "sysdate()")
     private Date testDate;
 
     // 테스트 이미지
@@ -52,6 +52,10 @@ public class Test {
     @Column(name = "test_count")
     @ColumnDefault(value = "0")
     private Long testCount;
+
+    // 테스트 상태값
+    @Column(name = "test_status")
+    private Integer testStatus;
 
     // 한줄평 목록
     @OneToMany(cascade = CascadeType.REMOVE)
