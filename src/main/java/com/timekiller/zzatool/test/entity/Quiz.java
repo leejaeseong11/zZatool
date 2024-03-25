@@ -20,17 +20,12 @@ import java.util.List;
 @Entity
 @Table(name = "Quiz")
 @DynamicInsert
-@SequenceGenerator(
-        name = "quiz_no_seq_generator",
-        sequenceName = "quiz_no_seq",
-        initialValue = 1,
-        allocationSize = 1)
 /* 문제 Entity */
 public class Quiz {
     // [PK] 문제 아이디
     @Id
     @Column(name = "quiz_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quiz_no_seq_generator")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
 
     // 문제 내용
