@@ -2,12 +2,10 @@ package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -55,6 +53,7 @@ public class Test {
 
     // 테스트 상태값
     @Column(name = "test_status")
+    @ColumnDefault(value = "0")
     private Integer testStatus;
 
     // 한줄평 목록
