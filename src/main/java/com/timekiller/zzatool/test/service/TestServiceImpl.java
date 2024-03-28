@@ -33,10 +33,10 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public void modifyTestByAdmin(Integer testId, TestDTO testDTO) {}
+    public void modifyTest(Integer testId, TestDTO testDTO) {}
 
     @Override
-    public void removeTestByAdmin(Integer testId) {}
+    public void removeTest(Integer testId) {}
 
     private TestDTO testEntityToDTO(Test testEntity) {
         return TestDTO.builder()

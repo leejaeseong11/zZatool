@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.report.entity;
 
 import com.timekiller.zzatool.test.entity.Quiz;
+import com.timekiller.zzatool.test.entity.Test;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -24,8 +25,11 @@ public class Report {
 
     @ManyToOne
     @JoinColumn(name = "quiz_id")
-    @NotNull
     private Quiz quiz;
+
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private Test test;
 
     @Column(name = "report_reason")
     @NotNull

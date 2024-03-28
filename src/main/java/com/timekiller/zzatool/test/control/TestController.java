@@ -21,11 +21,11 @@ public class TestController {
     public String main(
             Model model,
             Pageable pageable,
-            @RequestParam("page") int page,
-            @RequestParam("size") int size,
-            @RequestParam("search") String search,
-            @RequestParam("sort") String sort,
-            @RequestParam("date") int date) {
+            @RequestParam(value = "page", required = false) int page,
+            @RequestParam(value = "size", required = false) int size,
+            @RequestParam(value = "search", required = false) String search,
+            @RequestParam(value = "sort", required = false) String sort,
+            @RequestParam(value = "date", required = false) int date) {
         Page<TestDTO> testList = testService.findTestList(1, pageable);
         model.addAttribute("tests", testList.getContent());
         return "main";

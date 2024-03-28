@@ -10,8 +10,8 @@ public interface TestService {
     Page<TestDTO> findTestList(Integer testStatus, Pageable pageable);
 
     /* 관리자의 테스트 수정 */
-    void modifyTestByAdmin(Integer testId, TestDTO testDTO);
+    void modifyTest(Integer testId, TestDTO testDTO);
 
     /* 관리자의 테스트 삭제 */
-    void removeTestByAdmin(Integer testId);
+    void removeTest(Integer testId);
 }
