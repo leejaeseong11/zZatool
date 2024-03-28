@@ -32,12 +32,6 @@ public class TestServiceImpl implements TestService {
         return new PageImpl<>(selectedTestList, pageable, selectedTestPage.getTotalElements());
     }
 
-    @Override
-    public void modifyTest(Integer testId, TestDTO testDTO) {}
-
-    @Override
-    public void removeTest(Integer testId) {}
-
     private TestDTO testEntityToDTO(Test testEntity) {
         return TestDTO.builder()
                 .testId(testEntity.getTestId())
