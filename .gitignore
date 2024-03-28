@@ -18,6 +18,10 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+### QFile ###
+**/src/main/generated
+**/src/test/generated
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
