@@ -11,7 +11,6 @@ import java.sql.Date;
 @AllArgsConstructor
 @Builder
 public class TestCreateDTO {
-    private Long testId; // [PK] 테스트 아이디
     private String testTitle; // 테스트 제목
     private Long memberId; // [FK] 회원 아이디
     private Date testDate; // 테스트 제작일

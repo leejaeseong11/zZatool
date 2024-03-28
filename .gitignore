@@ -4,7 +4,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-db.properties
+src/main/resources/db.properties
 application-local.properties
 
 ### STS ###
