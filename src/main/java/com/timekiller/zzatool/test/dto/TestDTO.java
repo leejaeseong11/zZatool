@@ -1,3 +1,17 @@
 package com.timekiller.zzatool.test.dto;
 
-public class TestDTO {}
+import lombok.Builder;
+
+import java.util.Date;
+
+public record TestDTO(
+        Long testId,
+        String testTitle,
+        Long memberId,
+        Date testDate,
+        String testImage,
+        Long testCount,
+        Integer testStatus) {
+    @Builder
+    public TestDTO {}
+}
