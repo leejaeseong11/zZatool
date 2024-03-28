@@ -30,6 +30,10 @@ public class Member {
     @NotNull
     private String password;
 
+    @Column(name="role")
+    @NotNull
+    private String role;
+
     @Column(name = "member_status")
     @NotNull
     Integer memberStatus;
