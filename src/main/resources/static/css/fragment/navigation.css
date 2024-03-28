@@ -1,0 +1,17 @@
+.nav-logo {
+    width: fit-content;
+    height: 48px;
+    margin: 12px 0 12px 12px;
+    display: flex;
+    justify-content: flex-start;
+    text-decoration: none;
+}
+
+.nav-logo > img {
+    height: 48px;
+}
+
+.nav-logo > h1 {
+    height: 48px;
+    color: #0066CC;
+}
