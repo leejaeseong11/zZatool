@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @NoArgsConstructor
@@ -31,5 +32,5 @@ public class Report{
 
     @Column(name = "report_date")
     @NotNull
-    private Timestamp reportDate;
+    private Date reportDate;
 }

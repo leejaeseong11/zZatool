@@ -23,5 +23,5 @@ public class TestHashtag {
 
     @Column(name = "tag_content")
     @NotNull
-    private String tag_content;
+    private String tagContent;
 }
