@@ -1,12 +1,13 @@
 package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.ColumnDefault;
+
 import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Date;
@@ -38,11 +39,11 @@ public class Comment {
 
     // 작성자 닉네임
     @Column(name = "comment_writer")
-    @ColumnDefault(value = "익명")
+    //    @ColumnDefault(value = "익명")
     private String commentWriter;
 
     // 댓글 작성일
     @Column(name = "comment_date")
-    @ColumnDefault(value = "sysdate()")
+    //    @ColumnDefault(value = "sysdate()")
     private Date commentDate;
 }

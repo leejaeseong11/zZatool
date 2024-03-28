@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<div class="card" style="width: 18rem;" th:each="test : ${tests}">
+    <img alt="" class="card-img-top" src="">
+    <div class="card-body">
+        <h5 class="card-title" th:text="${test.testTitle}">테스트 제목</h5>
+        <p class="card-text" th:text="${test.testImage}">테스트 이미지</p>
+        <a class="btn btn-primary" href="">테스트 링크</a>
+    </div>
+</div>
+</body>
+</html>

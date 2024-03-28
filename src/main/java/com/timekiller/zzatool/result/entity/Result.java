@@ -2,11 +2,12 @@ package com.timekiller.zzatool.result.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
+
 import org.hibernate.annotations.DynamicInsert;
 
 import java.util.Date;
@@ -44,7 +45,7 @@ public class Result {
 
     // 제출일
     @Column(name = "result_date")
-    @ColumnDefault(value = "sysdate()")
+    //    @ColumnDefault(value = "sysdate()")
     private Date resultDate;
 
     // 결과 보기 목록

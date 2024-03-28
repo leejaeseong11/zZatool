@@ -2,6 +2,7 @@ package com.timekiller.zzatool.result.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="result_view")
-public class ResultView{
+@Table(name = "result_view")
+public class ResultView {
     // [FK] 결과 아이디
 
     @Id

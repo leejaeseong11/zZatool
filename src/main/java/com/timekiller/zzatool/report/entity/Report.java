@@ -1,8 +1,11 @@
 package com.timekiller.zzatool.report.entity;
 
 import com.timekiller.zzatool.test.entity.Quiz;
+import com.timekiller.zzatool.test.entity.Test;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 
 import java.sql.Date;
@@ -15,16 +18,19 @@ import java.sql.Timestamp;
 @Setter
 @Entity
 @Table(name = "report")
-public class Report{
+public class Report {
     @Id
     @Column(name = "report_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
 
     @ManyToOne
-    @JoinColumn(name= "quiz_id")
-    @NotNull
+    @JoinColumn(name = "quiz_id")
     private Quiz quiz;
+
+    @ManyToOne
+    @JoinColumn(name = "test_id")
+    private Test test;
 
     @Column(name = "report_reason")
     @NotNull

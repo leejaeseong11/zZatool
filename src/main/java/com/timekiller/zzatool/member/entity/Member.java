@@ -2,6 +2,7 @@ package com.timekiller.zzatool.member.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 
 @NoArgsConstructor
@@ -11,7 +12,7 @@ import lombok.*;
 @Setter
 @Entity
 @Table(name = "member")
-public class Member{
+public class Member {
     @Id
     @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

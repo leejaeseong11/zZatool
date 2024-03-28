@@ -1,4 +1,3 @@
 package com.timekiller.zzatool.member.control;
 
-public class MemberController {
-}
+public class MemberController {}

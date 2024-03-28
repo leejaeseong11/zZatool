@@ -2,10 +2,12 @@ package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -25,6 +27,9 @@ public class Quiz {
     @Column(name = "quiz_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
+
+    @Column(name = "quiz_no")
+    private Integer quizNo;
 
     // 문제 내용
     @Column(name = "quiz_content")
@@ -52,6 +57,6 @@ public class Quiz {
 
     // 보기 목록
     @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name="quiz_id")
+    @JoinColumn(name = "quiz_id")
     private List<View> viewList;
 }

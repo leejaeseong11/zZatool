@@ -2,6 +2,7 @@ package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+
 import lombok.*;
 
 @NoArgsConstructor
@@ -9,12 +10,12 @@ import lombok.*;
 @Getter
 @Builder
 @Entity
-@Table(name="test_hashtag")
+@Table(name = "test_hashtag")
 public class TestHashtag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="test_hashtag_id")
+    @Column(name = "test_hashtag_id")
     private Long testHashtagId;
 
     @Column(name = "test_id")
@@ -24,4 +25,5 @@ public class TestHashtag {
     @Column(name = "tag_content")
     @NotNull
     private String tagContent;
+
 }
