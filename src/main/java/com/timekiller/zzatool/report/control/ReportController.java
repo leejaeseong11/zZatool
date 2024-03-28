@@ -18,7 +18,7 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping("/add")
-    public String reportForm(
+    public String form(
             Model model,
             @RequestParam(value = "quiz_id", required = false) Long quizId,
             @RequestParam(value = "test_id", required = false) Long testId) {
@@ -26,7 +26,7 @@ public class ReportController {
     }
 
     @PostMapping("/add")
-    public String addReport(@ModelAttribute Report report, HttpServletRequest request) {
+    public String add(@ModelAttribute Report report, HttpServletRequest request) {
         String referer = request.getHeader("Referer");
         if (referer != null) {
             return "redirect:" + referer;
@@ -36,17 +36,17 @@ public class ReportController {
     }
 
     @GetMapping
-    public String findAllReport(Model model) {
+    public String findAll(Model model) {
         return "report/reports";
     }
 
     @GetMapping("/{reportId}")
-    public String findReport(Model model, @RequestParam("reportId") Long reportId) {
+    public String find(Model model, @RequestParam("reportId") Long reportId) {
         return "report/report";
     }
 
     @PatchMapping("/{reportId}")
-    public String modifyReport(@RequestParam("reportId") Long reportId) {
-        return "redirect:/report";
+    public String modify(@RequestParam("reportId") Long reportId) {
+        return "redirect:/report/" + reportId;
     }
 }

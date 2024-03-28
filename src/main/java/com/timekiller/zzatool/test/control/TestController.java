@@ -9,8 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,7 +17,7 @@ public class TestController {
     private final TestService testService;
 
     @GetMapping
-    public String main(
+    public String home(
             Model model,
             Pageable pageable,
             @RequestParam(value = "page", required = false) int page,
@@ -28,6 +27,6 @@ public class TestController {
             @RequestParam(value = "date", required = false) int date) {
         Page<TestDTO> testList = testService.findTestList(1, pageable);
         model.addAttribute("tests", testList.getContent());
-        return "main";
+        return "home";
     }
 }
