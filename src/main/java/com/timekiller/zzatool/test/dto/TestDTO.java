@@ -1,20 +1,18 @@
 package com.timekiller.zzatool.test.dto;
 
-import lombok.*;
+import lombok.Builder;
 
-import java.sql.Date;
+import java.util.Date;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class TestDTO {
-    private Long testId; // [PK] 테스트 아이디
-    private String testTitle; // 테스트 제목
-    private Long memberId; // [FK] 회원 아이디
-    private Date testDate; // 테스트 제작일
-    private String testImage; // 테스트 이미지
-    private Long testCount; // 테스트 제출 횟수
-    private Integer testStatus; // 테스트 상태값
+public record TestDTO(
+        Long testId,
+        String testTitle,
+        Long memberId,
+        Date testDate,
+        String testImage,
+        Long testCount,
+        Integer testStatus) {
+    @Builder
+    public TestDTO {
+    }
 }
