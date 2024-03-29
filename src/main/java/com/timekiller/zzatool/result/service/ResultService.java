@@ -12,5 +12,5 @@ public interface ResultService {
      * @param memberId 회원 아이디
      * @return 테스트 결과 목록
      */
-    Page<ResultDTO> findResultListByMemberNo(Long memberId);
+    Page<ResultDTO> findResultListByMemberId(Long memberId);
 }
