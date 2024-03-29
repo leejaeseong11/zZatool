@@ -30,9 +30,10 @@ public class Member {
     @NotNull
     private String password;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="role")
     @NotNull
-    private String role;
+    private Role role;
 
     @Column(name = "member_status")
     @NotNull

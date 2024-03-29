@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+    <h2>회원가입</h2>
+    <form>
+        <div>이메일을 입력하세요</div>
+        <input type="text"/>
+        <button id="dupchk-button" onclick="dupCheck()">중복 확인</button>
+        <button id="verify-mail-button" disabled>인증메일 전송</button>
+    </form>
+    <script th:inline="javascript">
+        
+    </script>
+</body>
+</html>
