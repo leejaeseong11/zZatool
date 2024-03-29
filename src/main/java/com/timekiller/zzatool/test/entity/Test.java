@@ -55,6 +55,7 @@ public class Test {
 
     // 테스트 상태값
     @Column(name = "test_status")
+    @ColumnDefault(value = "0")
     private Integer testStatus;
 
     // 한줄평 목록
