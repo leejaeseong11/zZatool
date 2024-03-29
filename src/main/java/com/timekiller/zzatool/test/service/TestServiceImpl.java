@@ -7,7 +7,9 @@ import com.timekiller.zzatool.test.dao.TestRepositoryCustom;
 import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.entity.Test;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -64,12 +66,13 @@ public class TestServiceImpl implements TestService {
                 testCreateDTO.setTestImage(imageUrl);
             }
 
-            Test test = Test.builder()
-                    .testTitle(testCreateDTO.getTestTitle())
-                    .testDate(testCreateDTO.getTestDate())
-                    .testImage(testCreateDTO.getTestImage())
-                    .memberId(testCreateDTO.getMemberId())
-                    .build();
+            Test test =
+                    Test.builder()
+                            .testTitle(testCreateDTO.getTestTitle())
+                            .testDate(testCreateDTO.getTestDate())
+                            .testImage(testCreateDTO.getTestImage())
+                            .memberId(testCreateDTO.getMemberId())
+                            .build();
 
             testRepository.save(test);
         } catch (Exception e) {
@@ -93,5 +96,4 @@ public class TestServiceImpl implements TestService {
             }
         }
     }
-
 }

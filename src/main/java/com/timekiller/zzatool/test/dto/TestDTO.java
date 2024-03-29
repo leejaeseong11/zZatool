@@ -13,6 +13,5 @@ public record TestDTO(
         Long testCount,
         Integer testStatus) {
     @Builder
-    public TestDTO {
-    }
+    public TestDTO {}
 }

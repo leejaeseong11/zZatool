@@ -3,6 +3,7 @@ package com.timekiller.zzatool.test.service;
 import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +16,7 @@ public interface TestService {
     /**
      * 사용자가 테스트를 생성할 수 있다.
      *
-     * @param testDTO   테스트
+     * @param testDTO 테스트
      * @param testImage 테스트 이미지
      * @throws Exception
      */

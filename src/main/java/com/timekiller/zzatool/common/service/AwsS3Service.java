@@ -1,11 +1,11 @@
 package com.timekiller.zzatool.common.service;
 
-
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +39,8 @@ public class AwsS3Service {
             uploadFile(inputStream, objectMetadata, fileName, bucket.concat(filePath));
         } catch (IOException e) {
             logger.log(Level.SEVERE, "AWS S3 Image Upload Error: " + e.getMessage());
-            throw new IllegalArgumentException(String.format("파일 변환 중 에러가 발생하였습니다 (%s)", file.getOriginalFilename()));
+            throw new IllegalArgumentException(
+                    String.format("파일 변환 중 에러가 발생하였습니다 (%s)", file.getOriginalFilename()));
         }
         return getFileUrl(fileName, bucket.concat(filePath));
     }
@@ -63,10 +64,11 @@ public class AwsS3Service {
         return extension;
     }
 
-    private void uploadFile(InputStream inputStream,
-                            ObjectMetadata objectMetadata,
-                            String fileName,
-                            String bucketPath) {
+    private void uploadFile(
+            InputStream inputStream,
+            ObjectMetadata objectMetadata,
+            String fileName,
+            String bucketPath) {
 
         PutObjectRequest putObjectRequest =
                 new PutObjectRequest(bucketPath, fileName, inputStream, objectMetadata)
@@ -93,7 +95,6 @@ public class AwsS3Service {
         String[] parts = imageUrl.split("/");
         return parts[parts.length - 1];
     }
-
 
     private void deleteFile(String fileName, String filePath) {
         try {

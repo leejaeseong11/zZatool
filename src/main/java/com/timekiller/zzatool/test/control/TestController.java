@@ -4,7 +4,9 @@ import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
+
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +33,9 @@ public class TestController {
     }
 
     @PostMapping("/test")
-    public ResponseEntity<?> createTest(@RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
-                                        @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
+    public ResponseEntity<?> createTest(
+            @RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
+            @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
         try {
             testService.createTest(testCreateDTO, testImage);
             return ResponseEntity.ok().body("테스트 생성이 완료되었습니다.");
