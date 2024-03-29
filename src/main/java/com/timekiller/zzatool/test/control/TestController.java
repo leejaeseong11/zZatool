@@ -1,6 +1,6 @@
 package com.timekiller.zzatool.test.control;
 
-import com.timekiller.zzatool.test.dto.TestCreateDTO;
+import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,10 +21,10 @@ public class TestController {
     }
 
     @PostMapping("/test")
-    public ResponseEntity<?> createTest(@RequestPart(name = "testCreateDTO") TestCreateDTO testCreateDTO,
+    public ResponseEntity<?> createTest(@RequestPart(name = "testDTO") TestDTO testDTO,
                                         @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
         try {
-            testService.createTest(testCreateDTO, testImage);
+            testService.createTest(testDTO, testImage);
             return ResponseEntity.ok().body("테스트 생성이 완료되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("테스트 생성에 실패했습니다.");

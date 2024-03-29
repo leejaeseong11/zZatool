@@ -2,7 +2,7 @@ package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.common.service.AwsS3Service;
 import com.timekiller.zzatool.test.dao.TestRepository;
-import com.timekiller.zzatool.test.dto.TestCreateDTO;
+import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.entity.Test;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,18 +22,18 @@ public class TestServiceImpl implements TestService {
     private final String profileImageUploadPath = "/test-image";
 
     @Override
-    public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws Exception {
+    public void createTest(TestDTO testDTO, MultipartFile testImage) throws Exception {
         try {
             if (!Objects.isNull(testImage)) {
                 String imageUrl = awsS3Service.uploadImage(testImage, profileImageUploadPath);
-                testCreateDTO.setTestImage(imageUrl);
+                testDTO.setTestImage(imageUrl);
             }
 
             Test test = Test.builder()
-                    .testTitle(testCreateDTO.getTestTitle())
-                    .testDate(testCreateDTO.getTestDate())
-                    .testImage(testCreateDTO.getTestImage())
-                    .memberId(testCreateDTO.getMemberId())
+                    .testTitle(testDTO.getTestTitle())
+                    .testDate(testDTO.getTestDate())
+                    .testImage(testDTO.getTestImage())
+                    .memberId(testDTO.getMemberId())
                     .build();
 
             testRepository.save(test);

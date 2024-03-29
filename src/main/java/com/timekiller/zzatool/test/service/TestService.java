@@ -1,6 +1,6 @@
 package com.timekiller.zzatool.test.service;
 
-import com.timekiller.zzatool.test.dto.TestCreateDTO;
+import com.timekiller.zzatool.test.dto.TestDTO;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface TestService {
@@ -8,8 +8,8 @@ public interface TestService {
     /**
      * 테스트 생성
      *
-     * @param test      테스트
-     * @param mainImage 테스트 대표 이미지
+     * @param testDTO   테스트
+     * @param testImage 테스트 대표 이미지
      */
-    void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws Exception;
+    void createTest(TestDTO testDTO, MultipartFile testImage) throws Exception;
 }
