@@ -20,11 +20,9 @@ public class TestController {
     public String home(
             Model model,
             Pageable pageable,
-            @RequestParam(value = "page", required = false) int page,
-            @RequestParam(value = "size", required = false) int size,
             @RequestParam(value = "search", required = false) String search,
             @RequestParam(value = "sort", required = false) String sort,
-            @RequestParam(value = "date", required = false) int date) {
+            @RequestParam(value = "date", required = false) Long date) {
         Page<TestDTO> testList = testService.findTestList(1, pageable);
         model.addAttribute("tests", testList.getContent());
         return "home";

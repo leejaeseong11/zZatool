@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.test.dao.TestRepository;
+import com.timekiller.zzatool.test.dao.TestRepositoryCustom;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.entity.Test;
 
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TestServiceImpl implements TestService {
     private final TestRepository testRepository;
+    private final TestRepositoryCustom testRepositoryCustom;
 
     @Override
     public Page<TestDTO> findTestList(Integer testStatus, Pageable pageable) {
