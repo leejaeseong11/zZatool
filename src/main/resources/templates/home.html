@@ -1,18 +1,40 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragment/base :: common_header (~{::title})}">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
     <title>짜툴</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
 <div th:insert="~{fragment/navigation :: copy}"></div>
 
-<div class="card" style="width: 18rem;" th:each="test : ${tests}">
-    <img alt="" class="card-img-top" src="">
-    <div class="card-body">
-        <h5 class="card-title" th:text="${test.testTitle}">테스트 제목</h5>
-        <p class="card-text" th:text="${test.testImage}">테스트 이미지</p>
-        <a class="btn btn-primary" href="">테스트 링크</a>
+<div class="test-card-container">
+    <div class="card" style="width: 18rem;" th:each="test : ${tests}">
+        <img alt="" class="card-img-top" src="">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${test.testTitle}">테스트 제목</h5>
+            <img th:alt="${test.testTitle}" th:src="${test.testImage}">
+            <ol class="test-hashtag-container">
+                <li th:each="hashtag : ${test.hashtagList}">
+                    <div th:text="'#' + ${hashtag.tagContent}">태그</div>
+                </li>
+            </ol>
+        </div>
+        <a class="btn btn-primary" th:href="'/test/' + ${test.testId}">시작하기</a>
     </div>
 </div>
+
+<nav aria-label="Page navigation example" id="page-button">
+    <ul class="pagination justify-content-center">
+        <li class="page-item disabled">
+            <a class="page-link">이전</a>
+        </li>
+        <li class="page-item"><a class="page-link" href="/search?page=0&size=20">1</a></li>
+        <li class="page-item"><a class="page-link" href="/search?page=1&size=20">2</a></li>
+        <li class="page-item"><a class="page-link active" href="/search?page=2&size=20">3</a></li>
+        <li class="page-item">
+            <a class="page-link" href="#">다음</a>
+        </li>
+    </ul>
+</nav>
 </body>
 </html>

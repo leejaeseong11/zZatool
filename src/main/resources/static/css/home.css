@@ -1,0 +1,24 @@
+.test-card-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	gap: 10px 20px;
+}
+
+.test-hashtag-container {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    margin-bottom: 0;
+}
+
+.test-hashtag-container > li {
+    border: 1px solid #d3d3d3;
+    background-color: #d3d3d3;
+    border-radius: 4px;
+    padding: 0 4px;
+}
+
+#page-button {
+    margin-top: 20px;
+}
