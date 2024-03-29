@@ -8,5 +8,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ResultRepository extends JpaRepository<Result, Long> {
-    Page<Result> findOrderByResultDateDesc(Example example, Pageable pageable);
+    Page<Result> findByOrderByResultDateDesc(Example example, Pageable pageable);
 }
