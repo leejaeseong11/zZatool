@@ -15,13 +15,13 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "result_view")
 public class ResultView {
-    // [FK] 결과 아이디
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "result_view_id")
     private Long resultViewId;
 
+    // [FK] 결과 아이디
     @Column(name = "result_id")
     @NotNull
     private Long resultId;
