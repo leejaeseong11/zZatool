@@ -1,10 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<head th:replace="~{fragment/base :: common_header (~{::title})}">
+    <title>짜툴</title>
 </head>
 <body>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
 <div class="card" style="width: 18rem;" th:each="test : ${tests}">
     <img alt="" class="card-img-top" src="">
     <div class="card-body">
