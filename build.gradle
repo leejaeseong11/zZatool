@@ -43,3 +43,8 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// Querydsl
+clean {
+    delete file('src/main/generated')
+}
