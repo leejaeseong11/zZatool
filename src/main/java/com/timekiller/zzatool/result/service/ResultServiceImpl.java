@@ -28,7 +28,8 @@ public class ResultServiceImpl implements ResultService {
         Result exampleResult = Result.builder().memberId(memberId).build();
         ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll();
         Example<Result> example = Example.of(exampleResult, exampleMatcher);
-        Page<Result> resultPageList = resultRepository.findOrderByResultDateDesc(example, pageable);
+        Page<Result> resultPageList =
+                resultRepository.findByOrderByResultDateDesc(example, pageable);
 
         List<ResultDTO> resultDTOList = new ArrayList<>();
         for (Result result : resultPageList) {
