@@ -3,6 +3,7 @@ package com.timekiller.zzatool.common.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.beans.factory.annotation.Value;
@@ -76,5 +77,30 @@ public class AwsS3Service {
 
     private String getFileUrl(String fileName, String bucketPath) {
         return amazonS3.getUrl(bucketPath, fileName).toString();
+    }
+
+    public void deleteImage(String imageUrl, String filePath) {
+        try {
+            String fileName = extractFileName(imageUrl); // 이미지 URL에서 파일 이름 추출
+            deleteFile(fileName, filePath); // 파일 삭제 메소드 호출
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "AWS S3 Image Delete Error: " + e.getMessage());
+            throw new IllegalArgumentException("이미지 삭제 중 오류가 발생했습니다.");
+        }
+    }
+
+    private String extractFileName(String imageUrl) {
+        String[] parts = imageUrl.split("/");
+        return parts[parts.length - 1];
+    }
+
+
+    private void deleteFile(String fileName, String filePath) {
+        try {
+            amazonS3.deleteObject(new DeleteObjectRequest(bucket.concat(filePath), fileName));
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "AWS S3 File Delete Error: " + e.getMessage());
+            throw new IllegalArgumentException("파일 삭제 중 오류가 발생했습니다.");
+        }
     }
 }
