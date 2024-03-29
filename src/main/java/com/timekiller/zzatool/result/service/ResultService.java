@@ -3,6 +3,7 @@ package com.timekiller.zzatool.result.service;
 import com.timekiller.zzatool.result.dto.ResultDTO;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ResultService {
 
@@ -12,5 +13,5 @@ public interface ResultService {
      * @param memberId 회원 아이디
      * @return 테스트 결과 목록
      */
-    Page<ResultDTO> findResultListByMemberId(Long memberId);
+    Page<ResultDTO> findResultListByMemberId(Long memberId, Pageable pageable);
 }
