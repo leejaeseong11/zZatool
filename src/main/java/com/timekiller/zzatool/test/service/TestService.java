@@ -16,7 +16,7 @@ public interface TestService {
     /**
      * 사용자가 테스트를 생성할 수 있다.
      *
-     * @param testCreateDTO 테스트
+     * @param testDTO 테스트
      * @param testImage 테스트 이미지
      * @throws Exception
      */
