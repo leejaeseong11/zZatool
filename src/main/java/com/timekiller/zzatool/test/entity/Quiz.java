@@ -2,12 +2,10 @@ package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
@@ -56,7 +54,7 @@ public class Quiz {
     private Float correctRate;
 
     // 보기 목록
-    @OneToMany(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "quiz_id")
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
     private List<View> viewList;
+
 }

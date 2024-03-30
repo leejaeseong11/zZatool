@@ -2,12 +2,10 @@ package com.timekiller.zzatool.test.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import org.hibernate.annotations.DynamicInsert;
 
 @Getter
@@ -31,9 +29,9 @@ public class View {
     private String viewContent;
 
     // [FK] 문제 아이디
-    @Column(name = "quiz_id")
-    @NotNull
-    private Long quizId;
+    @ManyToOne
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 
     // 보기 번호
     @Column(name = "view_number")
@@ -42,4 +40,5 @@ public class View {
     // 정답 여부
     @Column(name = "is_correct")
     private Integer isCorrect;
+
 }
