@@ -22,13 +22,33 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class TestController {
+    private static final int CONTENT_SIZE = 20;
+    private static final int PAGE_SIZE = 5;
     private final TestService testService;
+    private int totalPage;
+    private long totalTestCount;
 
     @GetMapping
     public String home(Model model, Pageable pageable) {
         Page<TestDTO> testList = testService.findTestList(pageable, 1);
         log.info("test data={}", testList);
         model.addAttribute("tests", testList.getContent());
+        model.addAttribute("link", "/search?page=0&size=20&search=&sort=new&date=all");
+        this.totalPage = testList.getTotalPages();
+        this.totalTestCount = testList.getTotalElements();
+        model.addAttribute("page", 0);
+        model.addAttribute("size", CONTENT_SIZE);
+        model.addAttribute("sort", "new");
+        model.addAttribute("date", "all");
+        model.addAttribute("startPage", 1);
+        model.addAttribute("isFirstPage", true);
+        int endPage = 5;
+        if (PAGE_SIZE * CONTENT_SIZE >= totalTestCount) {
+            endPage = (int) Math.ceil((double) totalTestCount / CONTENT_SIZE);
+        }
+        model.addAttribute("endPage", endPage);
+        boolean isLastPage = endPage == 1;
+        model.addAttribute("isLastPage", isLastPage);
         return "home";
     }
 
@@ -37,12 +57,35 @@ public class TestController {
             Model model,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "20") int size,
-            @RequestParam(value = "search", required = false) String search,
-            @RequestParam(value = "sort", required = false) String sort,
-            @RequestParam(value = "date", required = false) String date) {
+            @RequestParam(value = "search", defaultValue = "") String search,
+            @RequestParam(value = "sort", defaultValue = "new") String sort,
+            @RequestParam(value = "date", defaultValue = "all") String date) {
         List<TestDTO> testList = testService.findSearchTestList(page, size, 1, search, sort, date);
         log.info("test data={}", testList);
         model.addAttribute("tests", testList);
+        model.addAttribute(
+                "link",
+                String.format(
+                        "/search?page=%s&size=%s&search=%s&sort=%s&date=%s",
+                        page, size, search, sort, date));
+        model.addAttribute("page", page);
+        model.addAttribute("size", CONTENT_SIZE);
+        model.addAttribute("sort", sort);
+        model.addAttribute("date", date);
+        model.addAttribute("search", search);
+        int startPage = page / PAGE_SIZE * PAGE_SIZE + 1;
+        log.info("startPage={}", startPage);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("isFirstPage", startPage == 1);
+        int endPage = startPage + (PAGE_SIZE - 1);
+        boolean isLastPage = false;
+        if ((int) (page / PAGE_SIZE) == (int) (totalPage / PAGE_SIZE)) {
+            endPage = (int) Math.ceil((double) totalTestCount / CONTENT_SIZE);
+            isLastPage = true;
+        }
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("isLastPage", isLastPage);
+
         return "home";
     }
 

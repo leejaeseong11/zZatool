@@ -22,3 +22,29 @@
 #page-button {
     margin-top: 20px;
 }
+
+.nav-search-container {
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.nav-search-container div {
+    margin-right: 20px;
+}
+
+#main-search-container {
+    width: 400px;
+}
+
+#main-search-container input {
+    box-shadow: none;
+}
+
+.page-item {
+    cursor: pointer;
+}
+
+.active, .active a {
+    cursor: default;
+}

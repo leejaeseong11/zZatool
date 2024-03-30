@@ -4,12 +4,59 @@
     <title>짜툴</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
+<script th:src="@{/js/home.js}"></script>
 <body>
 <div th:insert="~{fragment/navigation :: copy}"></div>
 
+<div class="nav-search-container">
+    <div class="sort-button-container">
+        <input autocomplete="off" class="btn-check" id="new" name="sort" th:checked="${sort} == 'new'"
+               th:onclick="setHref([[${link}]], 'sort', 'new')"
+               type="radio">
+        <label class="btn btn-outline-primary" for="new">최신순</label>
+
+        <input autocomplete="off" class="btn-check" id="hot" name="sort" th:checked="${sort} == 'hot'"
+               th:onclick="setHref([[${link}]], 'sort', 'hot')" type="radio">
+        <label class="btn btn-outline-primary" for="hot">인기순</label>
+    </div>
+
+    <div class="date-button-container">
+        <input autocomplete="off" class="btn-check" id="all" name="date" th:checked="${date} == 'all'"
+               th:onclick="setHref([[${link}]], 'date', 'all')"
+               type="radio">
+        <label class="btn btn-outline-primary" for="all">전체</label>
+
+        <input autocomplete="off" class="btn-check" id="day" name="date" th:checked="${date} == '1'"
+               th:onclick="setHref([[${link}]], 'date', '1')"
+               type="radio">
+        <label class="btn btn-outline-primary" for="day">일</label>
+
+        <input autocomplete="off" class="btn-check" id="week" name="date" th:checked="${date} == '7'"
+               th:onclick="setHref([[${link}]], 'date', '7')"
+               type="radio">
+        <label class="btn btn-outline-primary" for="week">주</label>
+        <input autocomplete="off" class="btn-check" id="month" name="date" th:checked="${date} == '30'"
+               th:onclick="setHref([[${link}]], 'date', '30')"
+               type="radio">
+        <label class="btn btn-outline-primary" for="month">월</label>
+    </div>
+
+    <div class="input-group" id="main-search-container">
+        <input aria-describedby="button-search shadow-none" aria-label="테스트 제목 또는 태그를 검색하세요." class="form-control"
+               id="search-input"
+               placeholder="테스트 제목 또는 태그를 검색하세요."
+               th:onkeyup="enterKey([[${link}]], 'search', document.getElementById('search-input').value)"
+               th:value="${search}"
+               type="text">
+        <button class="btn btn-primary" id="button-search"
+                th:onclick="setHref([[${link}]], 'search', document.getElementById('search-input').value)"
+                type="button">검색
+        </button>
+    </div>
+</div>
+
 <div class="test-card-container">
     <div class="card" style="width: 18rem;" th:each="test : ${tests}">
-        <img alt="" class="card-img-top" src="">
         <div class="card-body">
             <h5 class="card-title" th:text="${test.testTitle}">테스트 제목</h5>
             <img th:alt="${test.testTitle}" th:src="${test.testImage}">
@@ -25,14 +72,15 @@
 
 <nav aria-label="Page navigation example" id="page-button">
     <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-            <a class="page-link">이전</a>
+        <li class="page-item" th:classappend="${isFirstPage}? 'disabled' : ''">
+            <a class="page-link" th:onclick="setHref([[${link}]], 'page', [[${page} - 5 - ${page}%5]])">이전</a>
         </li>
-        <li class="page-item"><a class="page-link" href="/search?page=0&size=20">1</a></li>
-        <li class="page-item"><a class="page-link" href="/search?page=1&size=20">2</a></li>
-        <li class="page-item"><a class="page-link active" href="/search?page=2&size=20">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#">다음</a>
+        <li class="page-item" th:each="pageIndex: ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link" th:classappend="${page} + 1 == ${pageIndex}? 'active' : ''"
+               th:onclick="setHref([[${link}]], 'page', [[${pageIndex} - 1]])" th:text="${pageIndex}">0</a>
+        </li>
+        <li class="page-item" th:classappend="${isLastPage}? 'disabled' : ''">
+            <a class="page-link" th:onclick="setHref([[${link}]], 'page', [[${page} + 5 - ${page}%5]])">다음</a>
         </li>
     </ul>
 </nav>

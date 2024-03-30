@@ -33,8 +33,8 @@ public class TestRepositoryCustomImpl implements TestRepositoryCustom {
         if (date.equals("all")) {
             return null;
         }
-        Integer numberDate = Integer.parseInt(date);
-        Date start = new Date(System.currentTimeMillis() - numberDate * 24 * 60 * 60 * 1000);
+        int numberDate = Integer.parseInt(date);
+        Date start = new Date(System.currentTimeMillis() - (long) numberDate * 24 * 60 * 60 * 1000);
         Date end = new Date(System.currentTimeMillis());
         return test.testDate.between(start, end);
     }
@@ -57,7 +57,7 @@ public class TestRepositoryCustomImpl implements TestRepositoryCustom {
                         test.testStatus.eq(testSearchCond.getTestStatus()),
                         likeSearchKeyword(testSearchCond.getSearch()),
                         limitDate(testSearchCond.getDate()))
-                .offset(page)
+                .offset((long) page * size)
                 .limit(size)
                 .orderBy(orderTest(testSearchCond.getSort()))
                 .fetch();
