@@ -31,7 +31,7 @@ public class TestController {
     }
 
     @PostMapping("/test")
-    public ResponseEntity<?> createTest(@RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
+    public ResponseEntity<?> createTest(@RequestPart(name = "testCreateDTO") TestCreateDTO testCreateDTO,
                                         @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
         try {
             testService.createTest(testCreateDTO, testImage);

@@ -28,7 +28,7 @@ public class TestServiceImpl implements TestService {
     private static final Logger logger = Logger.getLogger(TestServiceImpl.class.getName());
     private final TestRepository testRepository;
     private final AwsS3Service awsS3Service;
-    private final String profileImageUploadPath = "/test-image";
+    private final String testImageUploadPath = "/test-image";
     private final TestRepositoryCustom testRepositoryCustom;
 
     @Override
@@ -60,7 +60,7 @@ public class TestServiceImpl implements TestService {
     public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws Exception {
         try {
             if (!Objects.isNull(testImage)) {
-                String imageUrl = awsS3Service.uploadImage(testImage, profileImageUploadPath);
+                String imageUrl = awsS3Service.uploadImage(testImage, testImageUploadPath);
                 testCreateDTO.setTestImage(imageUrl);
             }
 
@@ -86,7 +86,7 @@ public class TestServiceImpl implements TestService {
             if (test.getMemberId().equals(memberId)) {
                 if (test.getTestCount() == 0L) {
                     testRepository.deleteById(testId);
-                    awsS3Service.deleteImage(test.getTestImage(), profileImageUploadPath);
+                    awsS3Service.deleteImage(test.getTestImage(), testImageUploadPath);
                 } else {
                     throw new RemoveException("테스트를 삭제할 수 없습니다.");
                 }
