@@ -29,7 +29,7 @@ public class View {
     private String viewContent;
 
     // [FK] 문제 아이디
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 

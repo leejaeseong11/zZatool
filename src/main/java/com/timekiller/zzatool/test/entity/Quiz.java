@@ -54,7 +54,7 @@ public class Quiz {
     private Float correctRate;
 
     // 보기 목록
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "quiz", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<View> viewList;
 
 }

@@ -3,7 +3,10 @@ package com.timekiller.zzatool.test.control;
 import com.timekiller.zzatool.exception.FindException;
 import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.QuizCreateDTO;
+import com.timekiller.zzatool.test.dto.QuizWithViewDTO;
+import com.timekiller.zzatool.test.dto.ViewForQuizDTO;
 import com.timekiller.zzatool.test.entity.Quiz;
+import com.timekiller.zzatool.test.entity.View;
 import com.timekiller.zzatool.test.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,17 +27,31 @@ public class QuizController {
     public ResponseEntity<?> selectAllQuiz(@PathVariable Long testId) {
         try {
             List<Quiz> quizList = quizService.selectAllQuiz(testId);
-            List<QuizCreateDTO> quizCreateDTOList = new ArrayList<>();
+            List<QuizWithViewDTO> quizWithViewDTOList = new ArrayList<>();
+
             for (Quiz quiz : quizList) {
-                QuizCreateDTO quizCreateDTO = new QuizCreateDTO();
-                quizCreateDTO.setQuizId(quiz.getQuizId());
-                quizCreateDTO.setQuizNo(quiz.getQuizNo());
-                quizCreateDTO.setTestId(quiz.getTestId());
-                quizCreateDTO.setQuizImage(quiz.getQuizImage());
-                quizCreateDTO.setQuizContent(quiz.getQuizContent());
-                quizCreateDTOList.add(quizCreateDTO);
+                QuizWithViewDTO quizWithViewDTO = new QuizWithViewDTO();
+                quizWithViewDTO.setQuizId(quiz.getQuizId());
+                quizWithViewDTO.setQuizNo(quiz.getQuizNo());
+                quizWithViewDTO.setTestId(quiz.getTestId());
+                quizWithViewDTO.setQuizContent(quiz.getQuizContent());
+                quizWithViewDTO.setQuizImage(quiz.getQuizImage());
+
+                // 보기 정보 추가
+                List<View> viewList = quiz.getViewList();
+                List<ViewForQuizDTO> viewForQuizDTOList = new ArrayList<>();
+                for (View view : viewList) {
+                    ViewForQuizDTO viewForQuizDTO = new ViewForQuizDTO();
+                    viewForQuizDTO.setViewContent(view.getViewContent());
+                    viewForQuizDTO.setViewNumber(view.getViewNumber());
+                    viewForQuizDTO.setIsCorrect(view.getIsCorrect());
+                    viewForQuizDTOList.add(viewForQuizDTO);
+                }
+                quizWithViewDTO.setViews(viewForQuizDTOList);
+
+                quizWithViewDTOList.add(quizWithViewDTO);
             }
-            return ResponseEntity.ok().body(quizCreateDTOList);
+            return ResponseEntity.ok().body(quizWithViewDTOList);
         } catch (FindException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("퀴즈 조회에 실패하였습니다: " + e.getMessage());
         }
