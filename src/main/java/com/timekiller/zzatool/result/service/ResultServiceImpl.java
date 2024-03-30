@@ -23,19 +23,21 @@ public class ResultServiceImpl implements ResultService {
     /* SELECT : 회원이 푼 테스트 목록 조회 */
     @Override
     public Page<ResultDTO> findResultListByMemberId(Long memberId, Pageable pageable) {
-        Result exampleResult = Result.builder().memberId(memberId).build();
-        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll();
-        Example<Result> example = Example.of(exampleResult, exampleMatcher);
-        Page<Result> resultPageList =
-                resultRepository.findByOrderByResultDateDesc(example, pageable);
+        List<Result> resultList =
+                resultRepository.findByMemberIdOrderByResultDateDesc(memberId, pageable);
 
         List<ResultDTO> resultDTOList = new ArrayList<>();
-        for (Result result : resultPageList) {
+        for (Result result : resultList) {
             String testTitle = findTestTitle(result.getTestId());
             resultDTOList.add(resultEntityToDTO(result, testTitle));
         }
 
-        return new PageImpl<>(resultDTOList, pageable, resultPageList.getTotalElements());
+        Result exampleResult = Result.builder().memberId(memberId).build();
+        ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll();
+        Example<Result> example = Example.of(exampleResult, exampleMatcher);
+        Long cnt = resultRepository.count(example);
+
+        return new PageImpl<>(resultDTOList, pageable, cnt);
     }
 
     /* method : 결과 entity를 dto로 변환 */
@@ -51,6 +53,10 @@ public class ResultServiceImpl implements ResultService {
 
     /* method : testId에 해당하는 testTitle 리턴 */
     private String findTestTitle(Long testId) {
-        return testRepository.findById(testId).get().getTestTitle();
+        try {
+            return testRepository.findById(testId).get().getTestTitle();
+        } catch (Exception e) {
+            return "존재하지 않는 테스트입니다";
+        }
     }
 }
