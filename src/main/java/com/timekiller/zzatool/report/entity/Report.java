@@ -38,4 +38,7 @@ public class Report {
     @Column(name = "report_date")
     @NotNull
     private Timestamp reportDate;
+
+    @Column(name = "report_status")
+    private Integer reportStatus;
 }

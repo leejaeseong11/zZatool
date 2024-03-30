@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,12 +26,31 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<ReportDTO> findAllReportList() {
-        return null;
+        List<ReportDTO> selectedReportList = new ArrayList<>();
+
+        List<Report> reportList = reportRepository.findAllByReportStatus(0);
+        for (Report report : reportList) {
+            selectedReportList.add(reportEntityToDTO(report));
+        }
+        return selectedReportList;
     }
 
     @Override
     public ReportDTO findReport() {
+
         return null;
+    }
+
+    private ReportDTO reportEntityToDTO(Report report) {
+        Quiz quiz = report.getQuiz();
+        Long quizId = quiz == null ? null : quiz.getQuizId();
+        return ReportDTO.builder()
+                .reportId(report.getReportId())
+                .quizId(quizId)
+                .testId(report.getTest().getTestId())
+                .reportReason(report.getReportReason())
+                .reportDate(report.getReportDate())
+                .build();
     }
 
     @Override
@@ -46,6 +67,7 @@ public class ReportServiceImpl implements ReportService {
                 .test(test)
                 .reportReason(reportDTO.reportReason())
                 .reportDate(reportDTO.reportDate())
+                .reportStatus(0)
                 .build();
     }
 }

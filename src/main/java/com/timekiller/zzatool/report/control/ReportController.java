@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,11 +35,15 @@ public class ReportController {
         if (quizId != null) {
             reportType = "quiz";
             QuizDTO quizDTO = quizService.findQuiz(quizId);
+            TestDTO testDTO = testService.findTest(quizDTO.testId());
             model.addAttribute("quiz", quizDTO);
+            model.addAttribute("pageTitle", testDTO.testTitle());
+            log.info("quiz = {}", quizDTO);
         } else if (testId != null) {
             reportType = "test";
             TestDTO testDTO = testService.findTest(testId);
             model.addAttribute("test", testDTO);
+            model.addAttribute("pageTitle", testDTO.testTitle());
         } else {
             return "error/error";
         }
@@ -78,6 +83,9 @@ public class ReportController {
 
     @GetMapping
     public String findAll(Model model) {
+        List<ReportDTO> reportList = reportService.findAllReportList();
+        log.info("report={}", reportList);
+        model.addAttribute("report");
         return "report/reports";
     }
 

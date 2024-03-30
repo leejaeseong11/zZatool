@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
-    <title>짜툴</title>
+    <title th:text="'신고 - ' + ${pageTitle}">짜툴</title>
     <link rel="stylesheet" th:href="@{/css/report/form.css}">
 </head>
 <body>
@@ -10,6 +10,7 @@
 <div class="report-content-container">
     <div th:if="${reportType eq 'quiz'}">
         <h3>퀴즈 신고</h3>
+        <div th:text="${pageTitle}">테스트 제목</div>
         <div th:text="${quiz.quizNo} + '. ' + ${quiz.quizContent}">퀴즈 내용</div>
         <img th:alt="'퀴즈 이미지'" th:if="${not #strings.isEmpty(quiz.quizImage)}">
         <div class="form-check" th:each="view : ${quiz.viewList}">
