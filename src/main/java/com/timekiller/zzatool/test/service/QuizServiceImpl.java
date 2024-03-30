@@ -2,6 +2,7 @@ package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.common.service.AwsS3Service;
 import com.timekiller.zzatool.exception.FindException;
+import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dao.QuizRepository;
 import com.timekiller.zzatool.test.dto.QuizCreateDTO;
 import com.timekiller.zzatool.test.entity.Quiz;
@@ -26,7 +27,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public List<Quiz> selectAllQuiz(Long testId) throws FindException {
         try {
-            return quizRepository.findByTestId(testId);
+            return quizRepository.findAllByTestId(testId);
         } catch (Exception e) {
             throw new FindException("문제 조회에 실패했습니다.");
         }
@@ -53,4 +54,18 @@ public class QuizServiceImpl implements QuizService {
             throw new Exception("퀴즈 생성 실패: " + e.getMessage(), e);
         }
     }
+
+    @Override
+    public void deleteAllQuiz(Long testId) throws RemoveException, FindException {
+        try {
+            List<Quiz> quizList = quizRepository.findAllByTestId(testId);
+            for (Quiz quiz : quizList) {
+                awsS3Service.deleteImage(quiz.getQuizImage(), quizImageUploadPath);
+            }
+            quizRepository.deleteAllByTestId(testId);
+        } catch (Exception e) {
+            throw new RemoveException("문제 삭제에 실패했습니다.");
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.test.control;
 
 import com.timekiller.zzatool.exception.FindException;
+import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.QuizCreateDTO;
 import com.timekiller.zzatool.test.entity.Quiz;
 import com.timekiller.zzatool.test.service.QuizService;
@@ -8,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -52,4 +50,17 @@ public class QuizController {
             return ResponseEntity.badRequest().body("퀴즈 생성에 실패했습니다.");
         }
     }
+
+    @DeleteMapping("quiz/{testId}")
+    public ResponseEntity<?> deleteAllQuiz(@PathVariable Long testId) {
+        try {
+            quizService.deleteAllQuiz(testId);
+            return ResponseEntity.ok().body("문제 삭제가 완료되었습니다.");
+        } catch (FindException e) {
+            return ResponseEntity.badRequest().body("문제 조회에 실패했습니다.");
+        } catch (RemoveException e) {
+            return ResponseEntity.badRequest().body("문제 삭제에 실패했습니다.");
+        }
+    }
 }
+

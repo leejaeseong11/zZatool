@@ -3,6 +3,7 @@ package com.timekiller.zzatool.test.service;
 import com.timekiller.zzatool.exception.AddException;
 import com.timekiller.zzatool.test.dao.ViewRepository;
 import com.timekiller.zzatool.test.dto.ViewDTO;
+import com.timekiller.zzatool.test.entity.Quiz;
 import com.timekiller.zzatool.test.entity.View;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,11 @@ public class ViewServiceImpl implements ViewService {
     @Override
     public void createView(ViewDTO viewDTO) throws AddException {
         try {
+            Quiz quiz = Quiz.builder().quizId(viewDTO.getQuizId()).build();
+
             View view = View.builder()
                     .viewContent(viewDTO.getViewContent())
-                    .quizId(viewDTO.getQuizId())
+                    .quiz(quiz)
                     .isCorrect(viewDTO.getIsCorrect())
                     .viewNumber(viewDTO.getViewNumber())
                     .build();

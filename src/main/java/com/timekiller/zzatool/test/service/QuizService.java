@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.exception.FindException;
+import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.QuizCreateDTO;
 import com.timekiller.zzatool.test.entity.Quiz;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,4 +27,12 @@ public interface QuizService {
      * @throws Exception
      */
     void createQuiz(QuizCreateDTO quizCreateDTO, MultipartFile quizImage) throws Exception;
+
+    /**
+     * 테스트 아이디에 해당하는 문제를 모두 삭제한다.
+     *
+     * @param testId 테스트 아이디
+     * @throws RemoveException
+     */
+    void deleteAllQuiz(Long testId) throws RemoveException, FindException;
 }
