@@ -19,6 +19,9 @@ public interface TestService {
     List<TestDTO> findSearchTestList(
             int page, int size, Integer testStatus, String search, String sort, String date);
 
+    /* 테스트 상세 조회 */
+    TestDTO findTest(Long testId);
+
     /**
      * 사용자가 테스트를 생성할 수 있다.
      *

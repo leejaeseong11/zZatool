@@ -7,6 +7,29 @@
 <body>
 <div th:insert="~{fragment/navigation :: copy}"></div>
 
+<div class="report-content-container">
+    <div th:if="${reportType eq 'quiz'}">
+        <h3>퀴즈 신고</h3>
+        <div th:text="${quiz.quizNo} + '. ' + ${quiz.quizContent}">퀴즈 내용</div>
+        <img th:alt="'퀴즈 이미지'" th:if="${not #strings.isEmpty(quiz.quizImage)}">
+        <div class="form-check" th:each="view : ${quiz.viewList}">
+            <input class="form-check-input" disabled th:checked="${view.isCorrect}"
+                   type="checkbox" value="">
+            <div th:text="${view.viewNumber} + '. ' + ${view.viewContent}">보기</div>
+        </div>
+    </div>
+    <div th:if="${reportType eq 'test'}">
+        <h3>테스트 신고</h3>
+        <div th:text="${test.testTitle}">테스트 제목</div>
+        <img th:alt="${test.testTitle}" th:src="${test.testImage}">
+        <ol class="test-hashtag-container">
+            <li th:each="hashtag : ${test.hashtagList}">
+                <div th:text="'#' + ${hashtag.tagContent}">태그</div>
+            </li>
+        </ol>
+    </div>
+</div>
+
 <form>
     <div class="col mb-3" id="report-reason-container">
         <label class="col-sm-2 col-form-label" for="report-reason-input">신고 사유</label>

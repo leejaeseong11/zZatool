@@ -5,14 +5,14 @@ import com.timekiller.zzatool.test.dto.TestDTO;
 
 public class AdminServiceImpl implements AdminService {
     @Override
-    public void modifyTest(Integer testId, TestDTO testDTO) {}
+    public void modifyTest(Long testId, TestDTO testDTO) {}
 
     @Override
-    public void removeTest(Integer testId) {}
+    public void removeTest(Long testId) {}
 
     @Override
-    public void modifyQuiz(Integer quizId, QuizDTO quizDTO) {}
+    public void modifyQuiz(Long quizId, QuizDTO quizDTO) {}
 
     @Override
-    public void removeQuiz(Integer quizId) {}
+    public void removeQuiz(Long quizId) {}
 }

@@ -2,10 +2,15 @@ package com.timekiller.zzatool.report.control;
 
 import com.timekiller.zzatool.report.entity.Report;
 import com.timekiller.zzatool.report.service.ReportService;
+import com.timekiller.zzatool.test.dto.QuizDTO;
+import com.timekiller.zzatool.test.dto.TestDTO;
+import com.timekiller.zzatool.test.service.QuizService;
+import com.timekiller.zzatool.test.service.TestService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +18,12 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 @RequestMapping("/report")
 public class ReportController {
     private final ReportService reportService;
+    private final TestService testService;
+    private final QuizService quizService;
 
     @GetMapping("/add")
     public String form(
@@ -25,8 +33,12 @@ public class ReportController {
         String reportType;
         if (quizId != null) {
             reportType = "quiz";
+            QuizDTO quizDTO = quizService.findQuiz(quizId);
+            model.addAttribute("quiz", quizDTO);
         } else if (testId != null) {
             reportType = "test";
+            TestDTO testDTO = testService.findTest(testId);
+            model.addAttribute("test", testDTO);
         } else {
             return "error/error";
         }
