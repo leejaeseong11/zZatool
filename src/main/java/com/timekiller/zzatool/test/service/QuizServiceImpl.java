@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.common.service.AwsS3Service;
+import com.timekiller.zzatool.exception.FindException;
 import com.timekiller.zzatool.test.dao.QuizRepository;
 import com.timekiller.zzatool.test.dto.QuizCreateDTO;
 import com.timekiller.zzatool.test.entity.Quiz;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +21,16 @@ public class QuizServiceImpl implements QuizService {
 
     private final QuizRepository quizRepository;
     private final AwsS3Service awsS3Service;
-    private final String quizImageUploadPath = "/test-image";
+    private final String quizImageUploadPath = "/quiz-image";
+
+    @Override
+    public List<Quiz> selectAllQuiz(Long testId) throws FindException {
+        try {
+            return quizRepository.findByTestId(testId);
+        } catch (Exception e) {
+            throw new FindException("문제 조회에 실패했습니다.");
+        }
+    }
 
     @Override
     public void createQuiz(QuizCreateDTO quizCreateDTO, MultipartFile quizImage) throws Exception {
