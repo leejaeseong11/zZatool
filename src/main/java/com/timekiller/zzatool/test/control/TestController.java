@@ -6,7 +6,6 @@ import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +19,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class TestController {
     private static final int CONTENT_SIZE = 20;
     private static final int PAGE_SIZE = 5;
@@ -31,7 +29,6 @@ public class TestController {
     @GetMapping
     public String home(Model model, Pageable pageable) {
         Page<TestDTO> testList = testService.findTestList(pageable, 1);
-        log.info("test data={}", testList);
         model.addAttribute("tests", testList.getContent());
         model.addAttribute("link", "/search?page=0&size=20&search=&sort=new&date=all");
         this.totalPage = testList.getTotalPages();
@@ -61,7 +58,6 @@ public class TestController {
             @RequestParam(value = "sort", defaultValue = "new") String sort,
             @RequestParam(value = "date", defaultValue = "all") String date) {
         List<TestDTO> testList = testService.findSearchTestList(page, size, 1, search, sort, date);
-        log.info("test data={}", testList);
         model.addAttribute("tests", testList);
         model.addAttribute(
                 "link",
@@ -74,7 +70,6 @@ public class TestController {
         model.addAttribute("date", date);
         model.addAttribute("search", search);
         int startPage = page / PAGE_SIZE * PAGE_SIZE + 1;
-        log.info("startPage={}", startPage);
         model.addAttribute("startPage", startPage);
         model.addAttribute("isFirstPage", startPage == 1);
         int endPage = startPage + (PAGE_SIZE - 1);
