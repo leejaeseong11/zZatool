@@ -30,13 +30,19 @@
     </div>
 </div>
 
-<form>
+<form method="post" th:action th:object="${report}">
     <div class="col mb-3" id="report-reason-container">
         <label class="col-sm-2 col-form-label" for="report-reason-input">신고 사유</label>
         <div class="col-sm">
-            <textarea class="form-control" id="report-reason-input"></textarea>
+            <textarea class="form-control" id="report-reason-input" th:field="*{reportReason}"></textarea>
         </div>
     </div>
+
+    <input id="quizId" name="quizId" readonly style="display:none;" th:if="${reportType eq 'quiz'}"
+           th:value=${quiz.quizId}>
+    <input id="testId" name="testId" readonly style="display:none;" th:if="${reportType eq 'test'}"
+           th:value=${test.testId}>
+
     <button class="btn btn-primary" type="submit">신고하기</button>
 </form>
 

@@ -1,13 +1,11 @@
 package com.timekiller.zzatool.report.control;
 
-import com.timekiller.zzatool.report.entity.Report;
+import com.timekiller.zzatool.report.dto.ReportDTO;
 import com.timekiller.zzatool.report.service.ReportService;
 import com.timekiller.zzatool.test.dto.QuizDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.QuizService;
 import com.timekiller.zzatool.test.service.TestService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,16 +43,35 @@ public class ReportController {
             return "error/error";
         }
         model.addAttribute("reportType", reportType);
+        model.addAttribute("report", ReportDTO.builder().build());
 
         return "report/form";
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute Report report, HttpServletRequest request) {
-        String referer = request.getHeader("Referer");
-        if (referer != null) {
-            return "redirect:" + referer;
+    public String add(@ModelAttribute ReportDTO reportDTO) {
+        log.info("reportDTO={}", reportDTO);
+        if (reportDTO.quizId() == null) {
+            reportService.addReport(
+                    ReportDTO.builder()
+                            .reportDate(new Timestamp(System.currentTimeMillis()))
+                            .reportReason(reportDTO.reportReason())
+                            .testId(reportDTO.testId())
+                            .quizId(null)
+                            .build());
+            //            return "redirect:/test/" + reportDTO.testId();
+            return "redirect:/";
         } else {
+            QuizDTO quizDTO = quizService.findQuiz(reportDTO.quizId());
+            reportService.addReport(
+                    ReportDTO.builder()
+                            .reportDate(new Timestamp(System.currentTimeMillis()))
+                            .reportReason(reportDTO.reportReason())
+                            .reportId(reportDTO.reportId())
+                            .testId(quizDTO.testId())
+                            .quizId(reportDTO.quizId())
+                            .build());
+            //            return "redirect:/test/" + quizDTO.testId();
             return "redirect:/";
         }
     }
