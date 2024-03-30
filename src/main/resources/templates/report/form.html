@@ -1,10 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
+    <title>짜툴</title>
+    <link rel="stylesheet" th:href="@{/css/report/form.css}">
 </head>
 <body>
-<div>form</div>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
+<form>
+    <div class="col mb-3" id="report-reason-container">
+        <label class="col-sm-2 col-form-label" for="report-reason-input">신고 사유</label>
+        <div class="col-sm">
+            <textarea class="form-control" id="report-reason-input"></textarea>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">신고하기</button>
+</form>
+
 </body>
 </html>

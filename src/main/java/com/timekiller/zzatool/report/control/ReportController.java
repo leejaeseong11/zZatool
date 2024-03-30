@@ -22,6 +22,16 @@ public class ReportController {
             Model model,
             @RequestParam(value = "quiz_id", required = false) Long quizId,
             @RequestParam(value = "test_id", required = false) Long testId) {
+        String reportType;
+        if (quizId != null) {
+            reportType = "quiz";
+        } else if (testId != null) {
+            reportType = "test";
+        } else {
+            return "error/error";
+        }
+        model.addAttribute("reportType", reportType);
+
         return "report/form";
     }
 
