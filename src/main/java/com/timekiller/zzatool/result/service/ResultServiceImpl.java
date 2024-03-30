@@ -6,8 +6,7 @@ import com.timekiller.zzatool.result.entity.Result;
 import com.timekiller.zzatool.test.dao.TestRepository;
 import com.timekiller.zzatool.test.service.TestServiceImpl;
 
-import lombok.RequiredArgsConstructor;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,10 @@ import java.util.List;
 import java.util.logging.Logger;
 
 @Service
-@RequiredArgsConstructor
 public class ResultServiceImpl implements ResultService {
     private static final Logger logger = Logger.getLogger(TestServiceImpl.class.getName());
-    private final ResultRepository resultRepository;
-    private final TestRepository testRepository;
+    @Autowired private ResultRepository resultRepository;
+    @Autowired private TestRepository testRepository;
 
     /* SELECT : 회원이 푼 테스트 목록 조회 */
     @Override
