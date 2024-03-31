@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.test.control;
 
 import com.timekiller.zzatool.exception.RemoveException;
+import com.timekiller.zzatool.test.dto.MyTestDTO;
 import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
@@ -8,6 +9,7 @@ import com.timekiller.zzatool.test.service.TestService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -103,6 +105,22 @@ public class TestController {
             return ResponseEntity.ok().body("테스트 삭제가 완료되었습니다.");
         } catch (RemoveException e) {
             return ResponseEntity.badRequest().body("테스트를 삭제할 수 없습니다.");
+        }
+    }
+
+    /* 임시 컨트롤러 */
+    @ResponseBody
+    @GetMapping("/test/{memberId}/{order}/{page}")
+    public Page<MyTestDTO> myTestList(
+            @PathVariable("memberId") Long memberId,
+            @PathVariable("order") String order,
+            @PathVariable("page") Integer page)
+            throws Exception {
+        try {
+            Pageable pageable = PageRequest.of(page - 1, 20);
+            return testService.findTestListByMemberId(memberId, order, pageable);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 }
