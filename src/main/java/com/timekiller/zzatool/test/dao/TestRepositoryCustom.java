@@ -1,3 +1,9 @@
 package com.timekiller.zzatool.test.dao;
 
-public interface TestRepositoryCustom {}
+import com.timekiller.zzatool.test.entity.Test;
+
+import java.util.List;
+
+public interface TestRepositoryCustom {
+    List<Test> findTestList(int page, int size, TestSearchCond testSearchCond);
+}
