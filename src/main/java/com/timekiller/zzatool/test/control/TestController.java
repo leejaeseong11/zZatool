@@ -109,6 +109,7 @@ public class TestController {
     }
 
     /* 임시 컨트롤러 */
+    @ResponseBody
     @GetMapping("/test/{memberId}/{order}/{page}")
     public Page<MyTestDTO> myTestList(
             @PathVariable("memberId") Long memberId,
