@@ -3,6 +3,7 @@ package com.timekiller.zzatool.test.dto;
 import lombok.Builder;
 
 import java.util.Date;
+import java.util.List;
 
 public record TestDTO(
         Long testId,
@@ -11,7 +12,8 @@ public record TestDTO(
         Date testDate,
         String testImage,
         Long testCount,
-        Integer testStatus) {
+        Integer testStatus,
+        List<HashtagDTO> hashtagList) {
     @Builder
     public TestDTO {}
 }

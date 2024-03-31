@@ -15,20 +15,72 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 public class TestController {
+    private static final int CONTENT_SIZE = 20;
+    private static final int PAGE_SIZE = 5;
     private final TestService testService;
+    private int totalPage;
+    private long totalTestCount;
 
     @GetMapping
-    public String home(
-            Model model,
-            Pageable pageable,
-            @RequestParam(value = "search", required = false) String search,
-            @RequestParam(value = "sort", required = false) String sort,
-            @RequestParam(value = "date", required = false) Long date) {
-        Page<TestDTO> testList = testService.findTestList(1, pageable);
+    public String home(Model model, Pageable pageable) {
+        Page<TestDTO> testList = testService.findTestList(pageable, 1);
         model.addAttribute("tests", testList.getContent());
+        model.addAttribute("link", "/search?page=0&size=20&search=&sort=new&date=all");
+        this.totalPage = testList.getTotalPages();
+        this.totalTestCount = testList.getTotalElements();
+        model.addAttribute("page", 0);
+        model.addAttribute("size", CONTENT_SIZE);
+        model.addAttribute("sort", "new");
+        model.addAttribute("date", "all");
+        model.addAttribute("startPage", 1);
+        model.addAttribute("isFirstPage", true);
+        int endPage = 5;
+        if (PAGE_SIZE * CONTENT_SIZE >= totalTestCount) {
+            endPage = (int) Math.ceil((double) totalTestCount / CONTENT_SIZE);
+        }
+        model.addAttribute("endPage", endPage);
+        boolean isLastPage = endPage == 1;
+        model.addAttribute("isLastPage", isLastPage);
+        return "home";
+    }
+
+    @GetMapping("/search")
+    public String searchHome(
+            Model model,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "20") int size,
+            @RequestParam(value = "search", defaultValue = "") String search,
+            @RequestParam(value = "sort", defaultValue = "new") String sort,
+            @RequestParam(value = "date", defaultValue = "all") String date) {
+        List<TestDTO> testList = testService.findSearchTestList(page, size, 1, search, sort, date);
+        model.addAttribute("tests", testList);
+        model.addAttribute(
+                "link",
+                String.format(
+                        "/search?page=%s&size=%s&search=%s&sort=%s&date=%s",
+                        page, size, search, sort, date));
+        model.addAttribute("page", page);
+        model.addAttribute("size", CONTENT_SIZE);
+        model.addAttribute("sort", sort);
+        model.addAttribute("date", date);
+        model.addAttribute("search", search);
+        int startPage = page / PAGE_SIZE * PAGE_SIZE + 1;
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("isFirstPage", startPage == 1);
+        int endPage = startPage + (PAGE_SIZE - 1);
+        boolean isLastPage = false;
+        if ((int) (page / PAGE_SIZE) == (int) (totalPage / PAGE_SIZE)) {
+            endPage = (int) Math.ceil((double) totalTestCount / CONTENT_SIZE);
+            isLastPage = true;
+        }
+        model.addAttribute("endPage", endPage);
+        model.addAttribute("isLastPage", isLastPage);
+
         return "home";
     }
 

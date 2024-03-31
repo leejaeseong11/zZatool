@@ -1,3 +1,8 @@
 package com.timekiller.zzatool.test.dto;
 
-public record HashtagDTO() {}
+import lombok.Builder;
+
+public record HashtagDTO(Long testHashtagId, Long testId, String tagContent) {
+    @Builder
+    public HashtagDTO {}
+}

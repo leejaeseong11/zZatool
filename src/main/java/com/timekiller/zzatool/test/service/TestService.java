@@ -8,10 +8,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface TestService {
 
     /* 테스트 상태에 따른 전체 목록 조회 */
-    Page<TestDTO> findTestList(Integer testStatus, Pageable pageable);
+    Page<TestDTO> findTestList(Pageable pageable, Integer testStatus);
+
+    /* 테스트 검색 및 정렬 */
+    List<TestDTO> findSearchTestList(
+            int page, int size, Integer testStatus, String search, String sort, String date);
 
     /**
      * 사용자가 테스트를 생성할 수 있다.
