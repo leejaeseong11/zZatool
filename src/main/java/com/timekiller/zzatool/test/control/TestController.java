@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,6 +59,11 @@ public class TestController {
             @RequestParam(value = "sort", defaultValue = "new") String sort,
             @RequestParam(value = "date", defaultValue = "all") String date) {
         List<TestDTO> testList = testService.findSearchTestList(page, size, 1, search, sort, date);
+
+        if (StringUtils.hasText(search)) {
+            this.totalPage = (int) Math.ceil((double) testList.size() / PAGE_SIZE);
+            this.totalTestCount = testList.size();
+        }
         model.addAttribute("tests", testList);
         model.addAttribute(
                 "link",
