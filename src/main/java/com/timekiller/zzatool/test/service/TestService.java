@@ -44,6 +44,8 @@ public interface TestService {
      * @param order 정렬 기준: date (최신순=default), count (조회순)
      * @param pageable 페이지
      * @return 페이지에 해당하는 테스트 목록
+     * @throws Exception sqlException 또는 정렬 기준 오류
      */
-    Page<MyTestDTO> findTestListByMemberId(Long memberId, String order, Pageable pageable);
+    Page<MyTestDTO> findTestListByMemberId(Long memberId, String order, Pageable pageable)
+            throws Exception;
 }
