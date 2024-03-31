@@ -62,4 +62,13 @@ public class TestRepositoryCustomImpl implements TestRepositoryCustom {
                 .orderBy(orderTest(testSearchCond.getSort()))
                 .fetch();
     }
+
+    @Override
+    public Long countSearchTest(String search) {
+        return jpaQueryFactory
+                .select(test.count())
+                .from(test)
+                .where(likeSearchKeyword(search))
+                .fetchFirst();
+    }
 }
