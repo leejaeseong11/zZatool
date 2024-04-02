@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
+    <meta charset="UTF-8">
+    <title>마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/member/mypage.css}"/>
+</head>
+<body>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
+<div class="mypage-bar">
+    내가 만든 테스트
+</div>
+
+<div class="mypage-content">
+    <div class="mypage-menu-bar">
+        <div class="mypage-menu">
+            회원 정보 수정
+        </div>
+
+        <div class="mypage-menu">
+            내가 푼 테스트
+        </div>
+
+        <div class="mypage-menu">
+            내가 만든 테스트
+        </div>
+
+        <div class="mypage-menu">
+            회원 탈퇴
+        </div>
+    </div>
+
+    <div class="mypage-content-page">
+        <div class="member-test-content" id="member-result-content">
+            테스트 정렬
+        </div>
+
+        <div class="page-bar">
+            페이지 지정
+        </div>
+    </div>
+</div>
+
+<footer>푸터 가져오기</footer>
+</body>
+</html>

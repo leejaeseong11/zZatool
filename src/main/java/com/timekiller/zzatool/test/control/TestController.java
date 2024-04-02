@@ -108,6 +108,15 @@ public class TestController {
         }
     }
 
+    /* 내가 만든 테스트 조회 페이지 이동 */
+    @GetMapping("/mypage/{memberId}/test/{order}/{page}")
+    public String myResultList(
+            @PathVariable("memberId") Long memberId,
+            @PathVariable("order") String order,
+            @PathVariable("page") Integer page) {
+        return "member/myTest";
+    }
+
     /* 임시 컨트롤러 */
     @ResponseBody
     @GetMapping("/test/{memberId}/{order}/{page}")
