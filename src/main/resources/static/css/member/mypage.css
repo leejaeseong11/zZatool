@@ -4,6 +4,35 @@
     padding-right: 10px;
     margin-left: 20px;
     margin-right: 20px;
+    margin-top: 10px;
     height: 30px;
     line-height: 30px;
+}
+
+.mypage-content {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.mypage-menu-bar {
+    width: 15%;
+    background-color: #d3d3d3;
+    height: 300px;
+    margin-left: 20px;
+    padding-top: 10px;
+}
+
+.mypage-menu {
+    height: 50px;
+    line-height: 50px;
+    text-align: center
+}
+
+.mypage-content-page {
+    width: 79%;
+    background-color: #d3d3d3;
+    height: 650px;
+    margin-right: 20px;
 }
