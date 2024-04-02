@@ -1,23 +1,25 @@
 package com.timekiller.zzatool.result.control;
 
-import com.timekiller.zzatool.result.dto.ResultDTO;
 import com.timekiller.zzatool.result.service.ResultServiceImpl;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
-@RestController
-@RequestMapping("/result")
+@Controller
+@RequiredArgsConstructor
 public class ResultController {
-    @Autowired private ResultServiceImpl resultService;
+    private ResultServiceImpl resultService;
 
-    /* 임시 컨트롤러 */
+    /* 내가 푼 테스트 조회 페이지 이동 */
+    @GetMapping("/mypage/{memberId}/result/{page}")
+    public String myResultList(
+            @PathVariable("memberId") Long memberId, @PathVariable("page") Integer page) {
+        return "member/myResult";
+    }
+
+    /* 임시 컨트롤러
     @GetMapping("/{memberId}/{page}")
     public Page<ResultDTO> myResultList(
             @PathVariable("memberId") Long memberId, @PathVariable("page") Integer page)
@@ -29,4 +31,5 @@ public class ResultController {
             throw new Exception(e.getMessage());
         }
     }
+    */
 }
