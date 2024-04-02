@@ -1,12 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
     <meta charset="UTF-8">
     <title>마이페이지</title>
     <link rel="stylesheet" th:href="@{/css/member/mypage.css}"/>
 </head>
 <body>
-<header>헤더 가져오기</header>
+<div th:insert="~{fragment/navigation :: copy}"></div>
 
 <div class="mypage-bar">
     회원 정보 수정
@@ -14,22 +14,26 @@
 
 <div class="mypage-content">
     <div class="mypage-menu-bar">
-        <div class="mypage-menu" id="member-info-put">
+        <div class="mypage-menu">
             회원 정보 수정
         </div>
 
-        <div class="mypage-menu" id="member-result-menu">
+        <div class="mypage-menu">
             내가 푼 테스트
         </div>
 
-        <div class="mypage-menu" id="member-test-menu">
+        <div class="mypage-menu">
             내가 만든 테스트
+        </div>
+
+        <div class="mypage-menu">
+            회원 탈퇴
         </div>
     </div>
 
     <div class="mypage-content-page">
         <div class="member-info-form">
-            회원 정보 수정 폼
+            회원 정보 수정 폼 넣어주세요
         </div>
     </div>
 </div>
