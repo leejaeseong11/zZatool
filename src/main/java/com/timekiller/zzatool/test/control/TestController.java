@@ -7,7 +7,6 @@ import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,7 +21,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class TestController {
     private static final int CONTENT_SIZE = 20;
     private static final int PAGE_SIZE = 5;
@@ -61,18 +59,11 @@ public class TestController {
             @RequestParam(value = "search", defaultValue = "") String search,
             @RequestParam(value = "sort", defaultValue = "new") String sort,
             @RequestParam(value = "date", defaultValue = "all") String date) {
-        //        if (StringUtils.hasText(search)) {
         this.totalTestCount = testService.countSearchTest(search);
         this.totalPage = (int) Math.ceil((double) this.totalTestCount / CONTENT_SIZE);
         if (page >= this.totalPage) {
             page = Math.max(this.totalPage - 1, 0);
         }
-        //            log.info("testcount={}", totalTestCount);
-        //            log.info("page={}", page);
-        //            log.info("totalPage={}", totalPage);
-        //        } else {
-        //
-        //        }
 
         List<TestDTO> testList = testService.findSearchTestList(page, size, 1, search, sort, date);
 

@@ -8,7 +8,6 @@ import com.timekiller.zzatool.test.service.QuizService;
 import com.timekiller.zzatool.test.service.TestService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +18,6 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 @RequestMapping("/report")
 public class ReportController {
     private final ReportService reportService;
@@ -38,7 +36,6 @@ public class ReportController {
             TestDTO testDTO = testService.findTest(quizDTO.testId());
             model.addAttribute("quiz", quizDTO);
             model.addAttribute("pageTitle", testDTO.testTitle());
-            log.info("quiz = {}", quizDTO);
         } else if (testId != null) {
             reportType = "test";
             TestDTO testDTO = testService.findTest(testId);
@@ -55,7 +52,6 @@ public class ReportController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute ReportDTO reportDTO) {
-        log.info("reportDTO={}", reportDTO);
         if (reportDTO.quizId() == null) {
             reportService.addReport(
                     ReportDTO.builder()
@@ -84,7 +80,6 @@ public class ReportController {
     @GetMapping
     public String findAll(Model model) {
         List<ReportDTO> reportList = reportService.findAllReportList();
-        log.info("report={}", reportList);
         model.addAttribute("reports", reportList);
         return "report/reports";
     }
