@@ -85,7 +85,7 @@ public class ReportController {
     public String findAll(Model model) {
         List<ReportDTO> reportList = reportService.findAllReportList();
         log.info("report={}", reportList);
-        model.addAttribute("report");
+        model.addAttribute("reports", reportList);
         return "report/reports";
     }
 

@@ -10,28 +10,24 @@
     <thead>
     <tr>
         <th scope="col">신고번호</th>
+        <th scope="col">신고일시</th>
         <th scope="col">신고사유</th>
         <th scope="col">테스트 링크</th>
         <th scope="col">수정하기</th>
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-    </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td colspan="2">Larry the Bird</td>
-        <td>@twitter</td>
+    <tr th:each="report : ${reports}">
+        <th scope="row" th:text="${report.reportId}">신고번호</th>
+        <td th:text="${report.reportDate}">신고일시</td>
+        <td th:text="${report.reportReason}">신고사유</td>
+        <td><a th:href="'/test/' + ${report.testId}">링크</a></td>
+        <td th:if="${report.quizId != null}">
+            <a class="btn btn-primary" th:href="'/admin/editQuiz/' + ${report.quizId}">퀴즈 수정</a>
+        </td>
+        <td th:if="${report.quizId == null}">
+            <a class="btn btn-primary" th:href="'/admin/editTest/' + ${report.testId}">테스트 수정</a>
+        </td>
     </tr>
     </tbody>
 </table>
