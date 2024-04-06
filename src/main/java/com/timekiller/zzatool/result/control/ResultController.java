@@ -19,6 +19,7 @@ public class ResultController {
             @PathVariable("memberId") Long memberId,
             @PathVariable("page") Integer page,
             Model model) {
+        model.addAttribute("link", "/mypage");
         model.addAttribute("memberId", memberId);
         model.addAttribute("page", page);
         return "member/myResult";

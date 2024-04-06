@@ -115,6 +115,7 @@ public class TestController {
             @PathVariable("order") String order,
             @PathVariable("page") Integer page,
             Model model) {
+        model.addAttribute("link", "/mypage");
         model.addAttribute("memberId", memberId);
         model.addAttribute("order", order);
         model.addAttribute("page", page);
