@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TestRepositoryCustom {
     List<Test> findTestList(int page, int size, TestSearchCond testSearchCond);
+
+    Long countSearchTest(String search);
 }

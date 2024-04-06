@@ -4,4 +4,8 @@ import com.timekiller.zzatool.report.entity.Report;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReportRepository extends JpaRepository<Report, Long> {}
+import java.util.List;
+
+public interface ReportRepository extends JpaRepository<Report, Long> {
+    List<Report> findAllByReportStatus(Integer reportStatus);
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
+    <title>짜툴 - 에러 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/error/error.css}">
+</head>
+<body>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
+<div class="container" style="max-width: 600px">
+    <div class="py-5 text-center">
+        <h2>잘못된 접근입니다.</h2>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="text-center">
+        <button class="btn btn-danger" onclick="history.back(-1)">돌아가기</button>
+    </div>
+</div>
+
+</body>
+</html>

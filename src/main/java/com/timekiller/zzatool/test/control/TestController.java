@@ -59,7 +59,14 @@ public class TestController {
             @RequestParam(value = "search", defaultValue = "") String search,
             @RequestParam(value = "sort", defaultValue = "new") String sort,
             @RequestParam(value = "date", defaultValue = "all") String date) {
+        this.totalTestCount = testService.countSearchTest(search);
+        this.totalPage = (int) Math.ceil((double) this.totalTestCount / CONTENT_SIZE);
+        if (page >= this.totalPage) {
+            page = Math.max(this.totalPage - 1, 0);
+        }
+
         List<TestDTO> testList = testService.findSearchTestList(page, size, 1, search, sort, date);
+
         model.addAttribute("tests", testList);
         model.addAttribute(
                 "link",
@@ -77,7 +84,7 @@ public class TestController {
         int endPage = startPage + (PAGE_SIZE - 1);
         boolean isLastPage = false;
         if ((int) (page / PAGE_SIZE) == (int) (totalPage / PAGE_SIZE)) {
-            endPage = (int) Math.ceil((double) totalTestCount / CONTENT_SIZE);
+            endPage = Math.max((int) Math.ceil((double) totalTestCount / CONTENT_SIZE), 1);
             isLastPage = true;
         }
         model.addAttribute("endPage", endPage);

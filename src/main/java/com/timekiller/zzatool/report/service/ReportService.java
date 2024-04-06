@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface ReportService {
     /* 회원이 퀴즈를 신고 */
-    void addReport();
+    void addReport(ReportDTO reportDTO);
 
     /* 관리자가 신고목록 조회 */
     List<ReportDTO> findAllReportList();
