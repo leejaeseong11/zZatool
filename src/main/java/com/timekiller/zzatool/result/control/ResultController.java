@@ -5,6 +5,7 @@ import com.timekiller.zzatool.result.service.ResultServiceImpl;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -15,7 +16,11 @@ public class ResultController {
     /* 내가 푼 테스트 조회 페이지 이동 */
     @GetMapping("/mypage/{memberId}/result/{page}")
     public String myResultList(
-            @PathVariable("memberId") Long memberId, @PathVariable("page") Integer page) {
+            @PathVariable("memberId") Long memberId,
+            @PathVariable("page") Integer page,
+            Model model) {
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("page", page);
         return "member/myResult";
     }
 

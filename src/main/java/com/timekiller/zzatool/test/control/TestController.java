@@ -113,7 +113,11 @@ public class TestController {
     public String myResultList(
             @PathVariable("memberId") Long memberId,
             @PathVariable("order") String order,
-            @PathVariable("page") Integer page) {
+            @PathVariable("page") Integer page,
+            Model model) {
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("order", order);
+        model.addAttribute("page", page);
         return "member/myTest";
     }
 
