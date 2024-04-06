@@ -2,9 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
     <meta charset="UTF-8">
-    <title>마이페이지</title>
+    <title>짜툴 : 마이페이지</title>
     <link rel="stylesheet" th:href="@{/css/member/mypage.css}"/>
 </head>
+<script th:src="@{/js/member/mypage.js}"></script>
 <body>
 <div th:insert="~{fragment/navigation :: copy}"></div>
 
@@ -14,15 +15,15 @@
 
 <div class="mypage-content">
     <div class="mypage-menu-bar">
-        <div class="mypage-menu">
+        <div class="mypage-menu" th:onclick="reload([[${link}]], [[${memberId}]])">
             회원 정보 수정
         </div>
 
-        <div class="mypage-menu">
+        <div class="mypage-menu" th:onclick="goResult([[${link}]], [[${memberId}]])">
             내가 푼 테스트
         </div>
 
-        <div class="mypage-menu">
+        <div class="mypage-menu" th:onclick="goTest([[${link}]], [[${memberId}]])">
             내가 만든 테스트
         </div>
 
