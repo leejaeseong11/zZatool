@@ -1,14 +1,11 @@
 function reload(url, memberId) {
-    console.log(url+", "+memberId);
     location.href = url + '/' + memberId;
 }
 
-function goResult(url, memberId) {
-    console.log(url+", "+memberId);
-    location.href = url + '/' + memberId + '/result/1';
+function goResult(url, memberId, page) {
+    location.href = url + '/' + memberId + '/result/' + page;
 }
 
-function goTest(url, memberId) {
-    console.log(url+", "+memberId);
-    location.href = url + '/' + memberId + '/test/date/1';
+function goTest(url, memberId, order, page) {
+    location.href = url + '/' + memberId + '/test/' + order + '/' + page;
 }

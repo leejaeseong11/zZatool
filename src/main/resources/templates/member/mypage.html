@@ -19,11 +19,11 @@
             회원 정보 수정
         </div>
 
-        <div class="mypage-menu" th:onclick="goResult([[${link}]], [[${memberId}]])">
+        <div class="mypage-menu" th:onclick="goResult([[${link}]], [[${memberId}]], '1')">
             내가 푼 테스트
         </div>
 
-        <div class="mypage-menu" th:onclick="goTest([[${link}]], [[${memberId}]])">
+        <div class="mypage-menu" th:onclick="goTest([[${link}]], [[${memberId}]], 'date', '1')">
             내가 만든 테스트
         </div>
 
