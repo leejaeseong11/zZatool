@@ -4,27 +4,32 @@ import com.timekiller.zzatool.member.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController
-@RequestMapping("/member")
+import java.util.HashMap;
+import java.util.Map;
+
+@Controller
 public class MemberController {
 
     @Autowired
     private MemberService ms;
 
-    // 중복 여부 확인 및 인증 메일 전송
-    @RequestMapping(value = "/mailverify", method = RequestMethod.GET)
-    public String verifyEmail(@RequestParam String email, Model model){
-        if(!ms.findEmail(email)){
-            model.addAttribute("message", "ok");
-        }else{
-            model.addAttribute("message", "이미 계정이 존재합니다.");
-        }
+    @GetMapping("/signup")
+    public String signup(){
+        return "member/signup";
+    }
 
-        return "/signup.html";
+    // 이메일 중복 여부 확인
+    @GetMapping("/emaildupchk")
+    public Map<String, Integer> verifyEmail(@RequestParam String email){
+        Map<String, Integer> map = new HashMap<>();
+        if(ms.findEmail(email)){
+            map.put("status",1);
+        }else{
+            map.put("status",0);
+        }
+        return map;
     }
 }

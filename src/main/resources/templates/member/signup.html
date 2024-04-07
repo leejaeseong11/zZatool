@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/signup.js}"></script>
+<body>
+    <h2>회원가입</h2>
+    <form action="/member/signup" method="post">
+        <div>
+            <label>이메일</label>
+            <input type="text" id="email" placeholder="이메일" />
+            <button type="button" th:onclick = "emailDupChk()">중복확인</button>
+        </div>
+        <div>
+            <label>닉네임</label>
+            <input type="text" id="nickname" placeholder="닉네임" />
+            <button>중복확인</button>
+        </div>
+        <div>
+            <label>비밀번호</label>
+            <input type="password" id="pwd" placeholder="비밀번호" />
+        </div>
+        <div>
+            <label>비밀번호 확인</label>
+            <input type="password" id="pwd2" placeholder="비밀번호 확인" />
+        </div>
+        <button type="submit" disabled>회원가입</button>
+    </form>
+</body>
+<script th:inline="javascript">
+<!--    function verifyemail(){-->
+<!--       const email =$("#email").val();-->
+<!--       $.ajax({-->
+<!--           url: "/member/mailverify",-->
+<!--           data: {"email":email},-->
+<!--           type: 'GET',-->
+<!--       }).done(function (data){-->
+<!--           alert(data.message);-->
+<!--       });-->
+<!--    }-->
+</script>
+</html>

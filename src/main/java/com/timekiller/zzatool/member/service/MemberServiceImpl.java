@@ -4,7 +4,9 @@ import com.timekiller.zzatool.member.dao.MemberRepository;
 import com.timekiller.zzatool.member.dto.MemberDTO;
 import com.timekiller.zzatool.member.entity.Member;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MemberServiceImpl implements MemberService{
     private MemberRepository mr;
 
@@ -36,7 +38,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     public boolean findEmail(String email){
-        Member member = mr.findByEmail(email);
+        Member member = mr.findByEmailAndMemberStatus(email, 1);
 
         if(member==null){
             return false;
@@ -44,4 +46,6 @@ public class MemberServiceImpl implements MemberService{
             return true;
         }
     }
+
+    public void sendEmail(String email){}
 }
