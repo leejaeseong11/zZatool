@@ -41,9 +41,9 @@ public class MemberServiceImpl implements MemberService{
         Member member = mr.findByEmailAndMemberStatus(email, 1);
 
         if(member==null){
-            return false;
-        }else{
             return true;
+        }else{
+            return false;
         }
     }
 

@@ -2,6 +2,7 @@ package com.timekiller.zzatool.member.control;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,14 +31,12 @@ public class MemberController {
 
     // 이메일 중복 여부 확인
     @GetMapping("/emaildupchk")
-    public Map<String, Integer> verifyEmail(@RequestParam String email){
-        Map<String, Integer> map = new HashMap<>();
+    public ResponseEntity<String> verifyEmail(@RequestParam String email){
         if(ms.findEmail(email)){
-            map.put("status",1);
+            return ResponseEntity.ok("1");
         }else{
-            map.put("status",0);
+            return ResponseEntity.ok("0");
         }
-        return map;
     }
 
     /* 마이페이지 이동 */
@@ -48,5 +47,5 @@ public class MemberController {
         return "member/mypage";
 
     }
-
+}
 
