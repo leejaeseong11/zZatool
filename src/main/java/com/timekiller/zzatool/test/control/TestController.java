@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.test.control;
 
 import com.timekiller.zzatool.exception.RemoveException;
+import com.timekiller.zzatool.test.dto.MyTestDTO;
 import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
@@ -8,6 +9,7 @@ import com.timekiller.zzatool.test.service.TestService;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -57,7 +59,14 @@ public class TestController {
             @RequestParam(value = "search", defaultValue = "") String search,
             @RequestParam(value = "sort", defaultValue = "new") String sort,
             @RequestParam(value = "date", defaultValue = "all") String date) {
+        this.totalTestCount = testService.countSearchTest(search);
+        this.totalPage = (int) Math.ceil((double) this.totalTestCount / CONTENT_SIZE);
+        if (page >= this.totalPage) {
+            page = Math.max(this.totalPage - 1, 0);
+        }
+
         List<TestDTO> testList = testService.findSearchTestList(page, size, 1, search, sort, date);
+
         model.addAttribute("tests", testList);
         model.addAttribute(
                 "link",
@@ -75,7 +84,7 @@ public class TestController {
         int endPage = startPage + (PAGE_SIZE - 1);
         boolean isLastPage = false;
         if ((int) (page / PAGE_SIZE) == (int) (totalPage / PAGE_SIZE)) {
-            endPage = (int) Math.ceil((double) totalTestCount / CONTENT_SIZE);
+            endPage = Math.max((int) Math.ceil((double) totalTestCount / CONTENT_SIZE), 1);
             isLastPage = true;
         }
         model.addAttribute("endPage", endPage);
@@ -103,6 +112,36 @@ public class TestController {
             return ResponseEntity.ok().body("테스트 삭제가 완료되었습니다.");
         } catch (RemoveException e) {
             return ResponseEntity.badRequest().body("테스트를 삭제할 수 없습니다.");
+        }
+    }
+
+    /* 내가 만든 테스트 조회 페이지 이동 */
+    @GetMapping("/mypage/{memberId}/test/{order}/{page}")
+    public String myResultList(
+            @PathVariable("memberId") Long memberId,
+            @PathVariable("order") String order,
+            @PathVariable("page") Integer page,
+            Model model) {
+        model.addAttribute("link", "/mypage");
+        model.addAttribute("memberId", memberId);
+        model.addAttribute("order", order);
+        model.addAttribute("page", page);
+        return "member/myTest";
+    }
+
+    /* 임시 컨트롤러 */
+    @ResponseBody
+    @GetMapping("/test/{memberId}/{order}/{page}")
+    public Page<MyTestDTO> myTestList(
+            @PathVariable("memberId") Long memberId,
+            @PathVariable("order") String order,
+            @PathVariable("page") Integer page)
+            throws Exception {
+        try {
+            Pageable pageable = PageRequest.of(page - 1, 20);
+            return testService.findTestListByMemberId(memberId, order, pageable);
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
         }
     }
 }
