@@ -6,3 +6,17 @@
     margin-right: 30px;
     margin-bottom: 20px;
 }
+
+.btn-area {
+    text-align: center;
+}
+
+.result-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#page-button {
+    margin-top: 20px;
+}

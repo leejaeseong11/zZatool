@@ -27,7 +27,7 @@ public class ResultController {
             @PathVariable("memberId") Long memberId,
             @PathVariable("page") Integer page,
             Model model) {
-        Pageable pageable = PageRequest.of(page - 1, 20);
+        Pageable pageable = PageRequest.of(page - 1, 9);
         Page<ResultDTO> resultList = resultService.findResultListByMemberId(memberId, pageable);
         this.totalPage = resultList.getTotalPages();
         this.totalCount = resultList.getTotalElements();
