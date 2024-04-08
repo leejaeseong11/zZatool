@@ -66,6 +66,19 @@ public class TestServiceImpl implements TestService {
         return selectedTestList;
     }
 
+    @Override
+    public TestDTO findTest(Long testId) {
+        return testEntityToDTO(
+                testRepository
+                        .findById(testId)
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트입니다.")));
+    }
+
+    @Override
+    public Long countSearchTest(String search) {
+        return testRepositoryCustom.countSearchTest(search);
+    }
+
     private TestDTO testEntityToDTO(Test testEntity) {
         List<HashtagDTO> hashtagDTOList = new ArrayList<>();
         for (TestHashtag hashtag : testEntity.getHashtagList()) {
