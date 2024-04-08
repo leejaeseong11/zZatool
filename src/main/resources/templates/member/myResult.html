@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>짜툴 : 마이페이지</title>
     <link rel="stylesheet" th:href="@{/css/member/mypage.css}"/>
+    <link rel="stylesheet" th:href="@{/css/member/myResult.css}"/>
 </head>
 <script th:src="@{/js/member/mypage.js}"></script>
 <body>
@@ -33,11 +34,12 @@
     </div>
 
     <div class="mypage-content-page">
-        <div class="result-content" th:each="result : ${results}" th:onclick="goResultInfo([[${result.resultId}]])">
-            <span class="result-title" th:text="${result.testTitle}"></span>
-            <span class="result-score" th:text="${result.resultScore}"></span>
+        <div class="card" th:each="result : ${results}">
+            <h5 class="result-title" th:text="${result.testTitle}" title="${result.testTitle}"></h5>
+            <span class="result-score" th:text="${result.resultScore}+'점'"></span>
             <span class="result-date"
                   th:text="${#dates.format(result.resultDate, 'yyyy-MM-dd HH:mm')}"></span>
+            <button class="btn btn-primary" th:onclick="goResultInfo([[${result.resultId}]])">결과 확인</button>
         </div>
     </div>
 </div>
