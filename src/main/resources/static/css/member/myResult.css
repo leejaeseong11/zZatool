@@ -1,8 +1,8 @@
 .card {
-    width: 18rem;
+    width: 20rem;
     padding: 10px;
     font-size: large;
     display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    margin-right: 30px;
+    margin-bottom: 20px;
 }
