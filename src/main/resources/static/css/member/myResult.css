@@ -2,4 +2,7 @@
     width: 18rem;
     padding: 10px;
     font-size: large;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
