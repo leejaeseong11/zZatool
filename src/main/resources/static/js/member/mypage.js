@@ -13,3 +13,7 @@ function goTest(url, memberId, order, page) {
 function goResultInfo(resultId) {
     console.log(resultId)
 }
+
+function goTestInfo(testId) {
+    console.log(testId)
+}

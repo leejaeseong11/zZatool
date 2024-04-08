@@ -1,3 +1,12 @@
+.sort-option {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn btn-secondary {
+    display: inline-block;
+}
+
 .card {
     width: 20rem;
     padding: 10px;
@@ -11,7 +20,7 @@
     text-align: center;
 }
 
-.result-title {
+.test-title {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

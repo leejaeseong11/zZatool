@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequiredArgsConstructor
 public class ResultController {
-    private static final int CONTENT_SIZE = 20;
+    private static final int CONTENT_SIZE = 9;
     private static final int PAGE_SIZE = 5;
     private final ResultService resultService;
     private int totalPage;
