@@ -5,10 +5,8 @@ import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dao.TestRepository;
 import com.timekiller.zzatool.test.dao.TestRepositoryCustom;
 import com.timekiller.zzatool.test.dao.TestSearchCond;
-import com.timekiller.zzatool.test.dto.HashtagDTO;
-import com.timekiller.zzatool.test.dto.MyTestDTO;
-import com.timekiller.zzatool.test.dto.TestCreateDTO;
-import com.timekiller.zzatool.test.dto.TestDTO;
+import com.timekiller.zzatool.test.dto.*;
+import com.timekiller.zzatool.test.entity.Comment;
 import com.timekiller.zzatool.test.entity.Test;
 import com.timekiller.zzatool.test.entity.TestHashtag;
 
@@ -190,5 +188,54 @@ public class TestServiceImpl implements TestService {
                 .testDate(test.getTestDate())
                 .testCount(test.getTestCount())
                 .build();
+    }
+
+    /* SELECT : 테스트 정보 조회 */
+    @Override
+    public TestDTO findTestByTestId(Long testId) throws Exception {
+        Optional<Test> testOpt = testRepository.findById(testId);
+        if (!testOpt.isPresent()) {
+            throw new Exception("테스트가 존재하지 않습니다");
+        }
+
+        Test test = testOpt.get();
+        if (test.getTestStatus() == 0) {
+            throw new Exception("테스트가 존재하지 않습니다");
+        }
+
+        List<HashtagDTO> hashtagDTOList = new ArrayList<>();
+        for (TestHashtag hashtag : test.getHashtagList()) {
+            HashtagDTO hashtagDTO =
+                    HashtagDTO.builder()
+                            .testHashtagId(hashtag.getTestHashtagId())
+                            .tagContent(hashtag.getTagContent())
+                            .build();
+            hashtagDTOList.add(hashtagDTO);
+        }
+
+        List<CommentDTO> commentDTOList = new ArrayList<>();
+        for (Comment comment : test.getCommentList()) {
+            CommentDTO commentDTO =
+                    CommentDTO.builder()
+                            .commentId(comment.getCommentId())
+                            .commentWriter(comment.getCommentWriter())
+                            .commentContent(comment.getCommentContent())
+                            .commentDate(comment.getCommentDate())
+                            .build();
+            commentDTOList.add(commentDTO);
+        }
+
+        TestDTO testDTO =
+                TestDTO.builder()
+                        .testId(testId)
+                        .testTitle(test.getTestTitle())
+                        .memberId(test.getMemberId())
+                        .testImage(test.getTestImage())
+                        .testCount(test.getTestCount())
+                        .testDate(test.getTestDate())
+                        .hashtagList(hashtagDTOList)
+                        .commentList(commentDTOList)
+                        .build();
+        return testDTO;
     }
 }
