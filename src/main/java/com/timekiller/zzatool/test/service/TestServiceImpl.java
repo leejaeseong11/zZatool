@@ -2,6 +2,7 @@ package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.common.service.AwsS3Service;
 import com.timekiller.zzatool.exception.RemoveException;
+import com.timekiller.zzatool.member.dao.MemberRepository;
 import com.timekiller.zzatool.test.dao.TestRepository;
 import com.timekiller.zzatool.test.dao.TestRepositoryCustom;
 import com.timekiller.zzatool.test.dao.TestSearchCond;
@@ -29,6 +30,7 @@ public class TestServiceImpl implements TestService {
     // Logger 인스턴스 생성
     private static final Logger logger = Logger.getLogger(TestServiceImpl.class.getName());
     private final TestRepository testRepository;
+    private final MemberRepository memberRepository;
     private final AwsS3Service awsS3Service;
     private final String profileImageUploadPath = "/test-image";
     private final TestRepositoryCustom testRepositoryCustom;
@@ -225,17 +227,34 @@ public class TestServiceImpl implements TestService {
             commentDTOList.add(commentDTO);
         }
 
-        TestDTO testDTO =
-                TestDTO.builder()
-                        .testId(testId)
-                        .testTitle(test.getTestTitle())
-                        .memberId(test.getMemberId())
-                        .testImage(test.getTestImage())
-                        .testCount(test.getTestCount())
-                        .testDate(test.getTestDate())
-                        .hashtagList(hashtagDTOList)
-                        .commentList(commentDTOList)
-                        .build();
-        return testDTO;
+        String memberName = findNicknameByMemberId(test.getMemberId());
+        return testEntityToDTO(test, hashtagDTOList, commentDTOList, memberName);
+    }
+
+    /* method : 회원 아이디로 회원 닉네임 조회 */
+    private String findNicknameByMemberId(Long memberId) throws Exception {
+        try {
+            return memberRepository.findById(memberId).get().getNickname();
+        } catch (Exception e) {
+            throw new Exception("테스트가 존재하지 않습니다");
+        }
+    }
+
+    /* method : 테스트 entity를 dto로 변환 */
+    private TestDTO testEntityToDTO(
+            Test test,
+            List<HashtagDTO> hashtagList,
+            List<CommentDTO> commentList,
+            String memberName) {
+        return TestDTO.builder()
+                .testId(test.getTestId())
+                .testTitle(test.getTestTitle())
+                .memberName(memberName)
+                .testImage(test.getTestImage())
+                .testCount(test.getTestCount())
+                .testDate(test.getTestDate())
+                .hashtagList(hashtagList)
+                .commentList(commentList)
+                .build();
     }
 }
