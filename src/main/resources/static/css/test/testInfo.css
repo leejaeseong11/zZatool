@@ -1,6 +1,7 @@
 .test-area {
     text-align: center;
     cursor: default;
+    margin-top: 20px;
 }
 
 .test-title-div {
@@ -40,6 +41,10 @@
     height: 50px;
     cursor: pointer;
     margin-bottom: 20px;
+}
+
+.test-comment-area {
+    cursor: default;
 }
 
 .test-comment-div {
