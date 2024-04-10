@@ -13,7 +13,8 @@ public record TestDTO(
         String testImage,
         Long testCount,
         Integer testStatus,
-        List<HashtagDTO> hashtagList) {
+        List<HashtagDTO> hashtagList,
+        List<CommentDTO> commentList) {
     @Builder
     public TestDTO {}
 }
