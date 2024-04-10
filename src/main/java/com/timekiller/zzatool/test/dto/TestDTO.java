@@ -9,6 +9,7 @@ public record TestDTO(
         Long testId,
         String testTitle,
         Long memberId,
+        String memberName,
         Date testDate,
         String testImage,
         Long testCount,
