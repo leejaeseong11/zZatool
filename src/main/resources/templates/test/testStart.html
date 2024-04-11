@@ -16,7 +16,7 @@
     </div>
 
     <div class="test-quiz-div" th:each="quiz : ${test.quizList}">
-        <h4 th:text="${quiz.quizNo}+'. '+${quiz.quizContent}">문제</h4>
+        <h4 th:text="${quiz.quizNo}+'. '+${quiz.quizContent}">문제</h4><br>
         <img th:alt="${quiz.quizNo}" th:src="${quiz.quizImage}">
 
         <div class="test-view-div">
@@ -28,7 +28,7 @@
     </div>
 
     <div class="test-submit-div">
-        <button class="btn btn-primary">결과 보기</button>
+        <button class="btn btn-primary" style="width: 200px; font-size: x-large;">채점 하기</button>
     </div>
 </div>
 
