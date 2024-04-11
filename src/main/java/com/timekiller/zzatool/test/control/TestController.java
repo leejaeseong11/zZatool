@@ -168,4 +168,11 @@ public class TestController {
 
         return "test/testInfo";
     }
+
+    /* 테스트 시작 페이지 이동 */
+    @GetMapping("test/start/{testId}")
+    public String testStart(@PathVariable("testId") Long testId, Model model) {
+        model.addAttribute("testId", testId);
+        return "test/testStart";
+    }
 }
