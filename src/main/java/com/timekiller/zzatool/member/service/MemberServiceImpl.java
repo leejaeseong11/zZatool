@@ -47,5 +47,15 @@ public class MemberServiceImpl implements MemberService{
         }
     }
 
+    public boolean findNickname(String nickname){
+        Member member = mr.findByNicknameAndMemberStatus(nickname, 1);
+
+        if(member==null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     public void sendEmail(String email){}
 }

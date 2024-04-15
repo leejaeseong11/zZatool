@@ -31,8 +31,17 @@ public class MemberController {
 
     // 이메일 중복 여부 확인
     @GetMapping("/emaildupchk")
-    public ResponseEntity<String> verifyEmail(@RequestParam String email){
+    public ResponseEntity<String> findEmail(@RequestParam String email){
         if(ms.findEmail(email)){
+            return ResponseEntity.ok("1");
+        }else{
+            return ResponseEntity.ok("0");
+        }
+    }
+
+    @GetMapping("/nicknamedupchk")
+    public ResponseEntity<String> findNickname(@RequestParam String nickname){
+        if(ms.findNickname(nickname)){
             return ResponseEntity.ok("1");
         }else{
             return ResponseEntity.ok("0");

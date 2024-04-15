@@ -23,6 +23,28 @@ function emailDupChk(){
     });
 }
 
+function nicknameDupChk(){
+    const email = document.getElementById('nickname').value; // 이메일 입력란의 값을 가져옴
+    $.ajax({
+        url: "/nicknamedupchk", // AJAX 요청을 보낼 URL
+        data: { "nickname": email }, // 이메일 값을 서버로 전달
+        type: 'GET',
+        success: function(response) { // 요청이 성공했을 때 실행할 콜백 함수
+              if(response==1){
+                alert("사용 가능한 닉네임입니다.");
+                emailchk = true;
+                console.log(emailchk);
+              }else{
+                alert("사용 불가한 닉네임입니다.");
+              }
+              updateSignupButtonState();
+        },
+        error: function(xhr, status, error) { // 요청이 실패했을 때 실행할 콜백 함수
+            console.error(xhr.responseText); // 오류 메시지를 콘솔에 출력
+        }
+    });
+}
+
 function emailOnChange(){
     emailchk = false;
     updateSignupButtonState();
