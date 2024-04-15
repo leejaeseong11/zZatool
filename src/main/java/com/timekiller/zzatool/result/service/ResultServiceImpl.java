@@ -59,4 +59,10 @@ public class ResultServiceImpl implements ResultService {
             return "존재하지 않는 테스트입니다";
         }
     }
+
+    /* SELECT : 결과 상세 조회 */
+    @Override
+    public ResultDTO findResultByResultId(Long resultId) {
+        return null;
+    }
 }
