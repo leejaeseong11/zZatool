@@ -1,0 +1,42 @@
+.test-area {
+    text-align: center;
+    cursor: default;
+    margin-top: 20px;
+}
+
+.test-title-div {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.test-share-div {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.share-img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.test-comment-area {
+    cursor: default;
+}
+
+.comment-write-area {
+    margin-bottom: 10px;
+}
+
+.comment-write-area>input {
+    width: 70%;
+    height: 40px;
+    font-size: large;
+}
+
+.test-comment-div {
+    border: 1px solid;
+    margin-bottom: 10px;
+    padding: 5px;
+}
