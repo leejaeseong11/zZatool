@@ -23,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TestController {
     private static final int CONTENT_SIZE = 20;
+    private static final int MY_TEST_CONTENT_SIZE = 9;
     private static final int PAGE_SIZE = 5;
     private final TestService testService;
     private int totalPage;
@@ -117,31 +118,39 @@ public class TestController {
 
     /* 내가 만든 테스트 조회 페이지 이동 */
     @GetMapping("/mypage/{memberId}/test/{order}/{page}")
-    public String myResultList(
+    public String mytestList(
             @PathVariable("memberId") Long memberId,
             @PathVariable("order") String order,
             @PathVariable("page") Integer page,
-            Model model) {
+            Model model)
+            throws Exception {
+        Pageable pageable = PageRequest.of(page - 1, 9);
+
+        try {
+            Page<MyTestDTO> testList =
+                    testService.findTestListByMemberId(memberId, order, pageable);
+            this.totalPage = testList.getTotalPages();
+            this.totalTestCount = testList.getTotalElements();
+            model.addAttribute("tests", testList.getContent());
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+
         model.addAttribute("link", "/mypage");
         model.addAttribute("memberId", memberId);
         model.addAttribute("order", order);
         model.addAttribute("page", page);
-        return "member/myTest";
-    }
+        model.addAttribute("startPage", 1);
+        model.addAttribute("isFirstPage", true);
 
-    /* 임시 컨트롤러 */
-    @ResponseBody
-    @GetMapping("/test/{memberId}/{order}/{page}")
-    public Page<MyTestDTO> myTestList(
-            @PathVariable("memberId") Long memberId,
-            @PathVariable("order") String order,
-            @PathVariable("page") Integer page)
-            throws Exception {
-        try {
-            Pageable pageable = PageRequest.of(page - 1, 20);
-            return testService.findTestListByMemberId(memberId, order, pageable);
-        } catch (Exception e) {
-            throw new Exception(e.getMessage());
+        int endPage = 5;
+        if (PAGE_SIZE * MY_TEST_CONTENT_SIZE >= totalTestCount) {
+            endPage = (int) Math.ceil((double) totalTestCount / MY_TEST_CONTENT_SIZE);
         }
+        model.addAttribute("endPage", endPage);
+        boolean isLastPage = endPage == 1;
+        model.addAttribute("isLastPage", isLastPage);
+
+        return "member/myTest";
     }
 }

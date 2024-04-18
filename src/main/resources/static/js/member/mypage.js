@@ -9,3 +9,11 @@ function goResult(url, memberId, page) {
 function goTest(url, memberId, order, page) {
     location.href = url + '/' + memberId + '/test/' + order + '/' + page;
 }
+
+function goResultInfo(resultId) {
+    console.log(resultId)
+}
+
+function goTestInfo(testId) {
+    console.log(testId)
+}
