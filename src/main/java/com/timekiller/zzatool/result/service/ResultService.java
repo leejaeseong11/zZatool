@@ -21,5 +21,5 @@ public interface ResultService {
      * @param resultId 결과 아이디
      * @return 테스트 결과
      */
-    ResultDTO findResultByResultId(Long resultId);
+    ResultDTO findResultByResultId(Long resultId) throws Exception;
 }
