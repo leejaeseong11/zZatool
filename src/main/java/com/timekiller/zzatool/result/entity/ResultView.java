@@ -1,5 +1,7 @@
 package com.timekiller.zzatool.result.entity;
 
+import com.timekiller.zzatool.test.entity.View;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -26,8 +28,17 @@ public class ResultView {
     @NotNull
     private Long resultId;
 
-    // [FK] 보기 아이디
-    @Column(name = "view_id")
+    // 나의 답 번호
+    @Column(name = "my_no")
+    private Integer myNo;
+
+    // 나의 답 내용
+    @Column(name = "my_answer")
+    private String myAnswer;
+
+    // 정답
+    @ManyToOne
+    @JoinColumn(name = "view_id")
     @NotNull
-    private Long viewId;
+    private View correctAnswer;
 }
