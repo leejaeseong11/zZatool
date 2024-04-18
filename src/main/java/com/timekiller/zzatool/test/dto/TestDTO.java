@@ -9,11 +9,13 @@ public record TestDTO(
         Long testId,
         String testTitle,
         Long memberId,
+        String memberName,
         Date testDate,
         String testImage,
         Long testCount,
         Integer testStatus,
-        List<HashtagDTO> hashtagList) {
+        List<HashtagDTO> hashtagList,
+        List<CommentDTO> commentList) {
     @Builder
     public TestDTO {}
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
+    <meta charset="UTF-8">
+    <title>짜툴</title>
+    <link rel="stylesheet" th:href="@{/css/test/testInfo.css}"/>
+</head>
+<script th:src="@{/js/test/testInfo.js}"></script>
+<body>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
+<div class="test-area">
+    <div class="test-title-div">
+        <h2 th:text="${test.testTitle}">테스트 제목</h2>
+    </div>
+
+    <div class="test-info-area">
+        <img th:alt="${test.testTitle}" th:src="${test.testImage}">
+        <div class="card">
+            <h5 th:text="'제작자: '+${test.memberName}">제작자</h5>
+            <h5 th:text="'제작일: '+${#dates.format(test.testDate, 'yyyy-MM-dd')}">제작일</h5>
+            <h5 th:text="'풀이된 횟수: '+${test.testCount}">제출횟수</h5>
+        </div>
+
+        <span class="hashtag-area" th:each="hashtag : ${test.hashtagList}">
+            <span class="tag-name" th:text="'#'+${hashtag.tagContent}" th:title="${hashtag.tagContent}">태그</span>
+            &nbsp;&nbsp;
+        </span>
+    </div>
+
+    <div class="test-start-div">
+        <button class="btn btn-primary" style="width: 200px; font-size: x-large;"
+                th:onclick="goToSolve([[${test.testId}]])">
+            시작하기
+        </button>
+    </div>
+
+    <div class="test-share-div">
+        <img class="share-img" th:alt="공유하기" th:onclick="shareThis()" th:src="@{/images/share.png}">
+    </div>
+</div>
+
+<div class="test-comment-area">
+    <h3>한줄평</h3>
+
+    <div th:classappend="${test.commentList}==null? 'test-comment-div':''"
+         th:text="${test.commentList}==null? '한줄평이 존재하지 않습니다.':''"></div>
+
+    <div class="test-comment-div" th:each="comment : ${test.commentList}">
+        <div class="comment">
+            <h6 th:text="${comment.commentWriter}+' ('+${#dates.format(comment.commentDate, 'yyyy-MM-dd HH:mm')}+')'"></h6>
+            <h5 th:text="${comment.commentContent}"></h5>
+        </div>
+    </div>
+</div>
+
+<footer></footer>
+</body>
+</html>
