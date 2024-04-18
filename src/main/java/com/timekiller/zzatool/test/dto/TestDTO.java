@@ -15,7 +15,8 @@ public record TestDTO(
         Long testCount,
         Integer testStatus,
         List<HashtagDTO> hashtagList,
-        List<CommentDTO> commentList) {
+        List<CommentDTO> commentList,
+        List<QuizDTO> quizList) {
     @Builder
     public TestDTO {}
 }

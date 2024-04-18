@@ -1,0 +1,28 @@
+.test-area {
+    cursor: default;
+    margin-top: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.test-title-div {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.test-quiz-div {
+    margin-bottom: 70px;
+}
+
+.test-view-div {
+    margin-top: 20px;
+}
+
+.view-content {
+    font-size: large;
+}
+
+.test-submit-div {
+    text-align: center;
+    margin-top: 50px;
+}

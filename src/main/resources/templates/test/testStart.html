@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
+    <meta charset="UTF-8">
+    <title>짜툴</title>
+    <link rel="stylesheet" th:href="@{/css/test/testStart.css}"/>
+</head>
+<script th:src="@{/js/test/testStart.js}"></script>
+<body>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
+<div class="test-area">
+    <div class="test-title-div">
+        <h2 th:text="${test.testTitle}">테스트 제목</h2>
+    </div>
+
+    <div class="test-quiz-div" th:each="quiz : ${test.quizList}">
+        <h4 th:text="${quiz.quizNo}+'. '+${quiz.quizContent}">문제</h4><br>
+        <img th:alt="${quiz.quizNo}" th:src="${quiz.quizImage}">
+
+        <div class="test-view-div">
+            <div class="view-content" th:each="view : ${quiz.viewList}">
+                <input autocomplete="off" class="btn-check" type="radio">
+                <label th:text="'('+${view.viewNumber}+') '+${view.viewContent}">보기</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-submit-div">
+        <button class="btn btn-primary" style="width: 200px; font-size: x-large;" th:onclick="testSubmit()">채점 하기
+        </button>
+    </div>
+</div>
+
+<footer></footer>
+</body>
+</html>

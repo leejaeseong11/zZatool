@@ -7,9 +7,7 @@ import com.timekiller.zzatool.test.dao.TestRepository;
 import com.timekiller.zzatool.test.dao.TestRepositoryCustom;
 import com.timekiller.zzatool.test.dao.TestSearchCond;
 import com.timekiller.zzatool.test.dto.*;
-import com.timekiller.zzatool.test.entity.Comment;
-import com.timekiller.zzatool.test.entity.Test;
-import com.timekiller.zzatool.test.entity.TestHashtag;
+import com.timekiller.zzatool.test.entity.*;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,10 +15,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -227,8 +222,9 @@ public class TestServiceImpl implements TestService {
             commentDTOList.add(commentDTO);
         }
 
+        List<QuizDTO> quizDTOList = findQuizList(test);
         String memberName = findNicknameByMemberId(test.getMemberId());
-        return testEntityToDTO(test, hashtagDTOList, commentDTOList, memberName);
+        return testEntityToDTO(test, hashtagDTOList, commentDTOList, quizDTOList, memberName);
     }
 
     /* method : 회원 아이디로 회원 닉네임 조회 */
@@ -245,6 +241,7 @@ public class TestServiceImpl implements TestService {
             Test test,
             List<HashtagDTO> hashtagList,
             List<CommentDTO> commentList,
+            List<QuizDTO> quizList,
             String memberName) {
         return TestDTO.builder()
                 .testId(test.getTestId())
@@ -255,6 +252,54 @@ public class TestServiceImpl implements TestService {
                 .testDate(test.getTestDate())
                 .hashtagList(hashtagList)
                 .commentList(commentList)
+                .quizList(quizList)
                 .build();
+    }
+
+    /* method : 문제 목록 entity를 dto로 변환 */
+    private List<QuizDTO> findQuizList(Test test) throws Exception {
+        List<QuizDTO> quizDTOList = new ArrayList<>();
+
+        if (test.getQuizList().size() == 0) throw new Exception("문제가 존재하지 않습니다");
+        for (Quiz quiz : test.getQuizList()) {
+            List<ViewDTO> viewDTOList = new ArrayList<>();
+            for (View view : quiz.getViewList()) {
+                ViewDTO viewDTO =
+                        ViewDTO.builder()
+                                .viewId(view.getViewId())
+                                .viewNumber(view.getViewNumber())
+                                .viewContent(view.getViewContent())
+                                .build();
+                viewDTOList.add(viewDTO);
+            }
+
+            viewDTOList.sort(
+                    new Comparator<ViewDTO>() {
+                        @Override
+                        public int compare(ViewDTO v1, ViewDTO v2) {
+                            return v1.viewNumber() - v2.viewNumber();
+                        }
+                    });
+
+            QuizDTO quizDTO =
+                    QuizDTO.builder()
+                            .quizId(quiz.getQuizId())
+                            .quizNo(quiz.getQuizNo())
+                            .quizContent(quiz.getQuizContent())
+                            .quizImage(quiz.getQuizImage())
+                            .viewList(viewDTOList)
+                            .build();
+            quizDTOList.add(quizDTO);
+        }
+
+        quizDTOList.sort(
+                new Comparator<QuizDTO>() {
+                    @Override
+                    public int compare(QuizDTO q1, QuizDTO q2) {
+                        return q1.quizNo() - q2.quizNo();
+                    }
+                });
+
+        return quizDTOList;
     }
 }
