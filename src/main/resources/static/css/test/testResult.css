@@ -6,7 +6,19 @@
 
 .test-title-div {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 50px;
+    border: 1px solid #EAEAEA;
+    border-radius: 5px;
+    background-color: #EAEAEA;
+    padding: 15px;
+}
+
+.test-quiz-div {
+    margin-bottom: 70px;
+}
+
+.test-view-div {
+    margin-top: 20px;
 }
 
 .test-share-div {
