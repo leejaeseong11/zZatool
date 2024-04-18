@@ -2,9 +2,9 @@ package com.timekiller.zzatool.result.control;
 
 import com.timekiller.zzatool.result.dto.ResultDTO;
 import com.timekiller.zzatool.result.service.ResultService;
-
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.Page;
