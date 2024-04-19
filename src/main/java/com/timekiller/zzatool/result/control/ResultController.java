@@ -2,6 +2,8 @@ package com.timekiller.zzatool.result.control;
 
 import com.timekiller.zzatool.result.dto.ResultDTO;
 import com.timekiller.zzatool.result.service.ResultService;
+import com.timekiller.zzatool.test.dto.TestDTO;
+import com.timekiller.zzatool.test.service.TestService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,6 +20,7 @@ public class ResultController {
     private static final int CONTENT_SIZE = 9;
     private static final int PAGE_SIZE = 5;
     private final ResultService resultService;
+    private final TestService testService;
     private int totalPage;
     private long totalCount;
 
@@ -47,5 +50,15 @@ public class ResultController {
         boolean isLastPage = endPage == 1;
         model.addAttribute("isLastPage", isLastPage);
         return "member/myResult";
+    }
+
+    /* 테스트 결과 조회 페이지 이동 */
+    @GetMapping("result/{resultId}")
+    public String myResult(@PathVariable("resultId") Long resultId, Model model) throws Exception {
+        ResultDTO resultDTO = resultService.findResultByResultId(resultId);
+        model.addAttribute("result", resultDTO);
+        TestDTO testDTO = testService.findTestByTestId(resultDTO.getTestId());
+        model.addAttribute("test", testDTO);
+        return "test/testResult";
     }
 }

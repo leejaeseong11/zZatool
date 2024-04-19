@@ -3,6 +3,7 @@ package com.timekiller.zzatool.result.dto;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @Getter
@@ -16,4 +17,5 @@ public class ResultDTO {
     private Long memberId; // 회원 아이디
     private Integer resultScore; // 결과 점수
     private Date resultDate; // 제출일
+    private List<ResultViewDTO> resultViewList; // 결과 보기 목록
 }
