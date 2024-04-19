@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
@@ -97,27 +96,31 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws Exception {
-        try {
-            if (!Objects.isNull(testImage)) {
-                String imageUrl = awsS3Service.uploadImage(testImage, profileImageUploadPath);
-                testCreateDTO.setTestImage(imageUrl);
-            }
+    public void createTest(TestDTO testDTO, MultipartFile testImage) {}
 
-            Test test =
-                    Test.builder()
-                            .testTitle(testCreateDTO.getTestTitle())
-                            .testDate(testCreateDTO.getTestDate())
-                            .testImage(testCreateDTO.getTestImage())
-                            .memberId(testCreateDTO.getMemberId())
-                            .build();
-
-            testRepository.save(test);
-        } catch (Exception e) {
-            logger.log(Level.INFO, "테스트 생성 실패", e);
-            throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
-        }
-    }
+    //    @Override
+    //    public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws
+    // Exception {
+    //        try {
+    //            if (!Objects.isNull(testImage)) {
+    //                String imageUrl = awsS3Service.uploadImage(testImage, profileImageUploadPath);
+    //                testCreateDTO.setTestImage(imageUrl);
+    //            }
+    //
+    //            Test test =
+    //                    Test.builder()
+    //                            .testTitle(testCreateDTO.getTestTitle())
+    //                            .testDate(testCreateDTO.getTestDate())
+    //                            .testImage(testCreateDTO.getTestImage())
+    //                            .memberId(testCreateDTO.getMemberId())
+    //                            .build();
+    //
+    //            testRepository.save(test);
+    //        } catch (Exception e) {
+    //            logger.log(Level.INFO, "테스트 생성 실패", e);
+    //            throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
+    //        }
+    //    }
 
     @Override
     public void deleteTest(Long testId, Long memberId) throws RemoveException {

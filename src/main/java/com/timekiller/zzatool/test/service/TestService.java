@@ -2,7 +2,6 @@ package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.MyTestDTO;
-import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 
 import org.springframework.data.domain.Page;
@@ -26,14 +25,17 @@ public interface TestService {
     /* 검색된 테스트 개수 */
     Long countSearchTest(String search);
 
-    /**
-     * 사용자가 테스트를 생성할 수 있다.
-     *
-     * @param testCreateDTO 테스트
-     * @param testImage 테스트 이미지
-     * @throws Exception
-     */
-    void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws Exception;
+    /* 사용자가 테스트를 생성 */
+    void createTest(TestDTO testDTO, MultipartFile testImage);
+
+    //    /**
+    //     * 사용자가 테스트를 생성할 수 있다.
+    //     *
+    //     * @param testCreateDTO 테스트
+    //     * @param testImage 테스트 이미지
+    //     * @throws Exception
+    //     */
+    //    void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws Exception;
 
     /**
      * 테스트를 푼 회원이 없는 경우 작성자가 테스트를 삭제할 수 있다.

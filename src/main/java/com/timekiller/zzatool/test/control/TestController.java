@@ -2,7 +2,6 @@ package com.timekiller.zzatool.test.control;
 
 import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.MyTestDTO;
-import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.service.TestService;
 
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -94,17 +92,29 @@ public class TestController {
         return "home";
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<?> createTest(
-            @RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
-            @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
-        try {
-            testService.createTest(testCreateDTO, testImage);
-            return ResponseEntity.ok().body("테스트 생성이 완료되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("테스트 생성에 실패했습니다.");
-        }
+    @GetMapping("/test/add")
+    public String addForm(Model model) {
+        model.addAttribute("test", TestDTO.builder().build());
+
+        return "test/form";
     }
+
+    @PostMapping("/test/add")
+    public String add(@ModelAttribute TestDTO testDTO) {
+        return "test/" + testDTO.testId() + "/quiz/add";
+    }
+
+    //    @PostMapping("/test")
+    //    public ResponseEntity<?> createTest(
+    //            @RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
+    //            @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
+    //        try {
+    //            testService.createTest(testCreateDTO, testImage);
+    //            return ResponseEntity.ok().body("테스트 생성이 완료되었습니다.");
+    //        } catch (Exception e) {
+    //            return ResponseEntity.badRequest().body("테스트 생성에 실패했습니다.");
+    //        }
+    //    }
 
     @DeleteMapping("/test/{testId}")
     public ResponseEntity<?> deleteTest(@PathVariable Long testId, @RequestParam Long memberId) {
