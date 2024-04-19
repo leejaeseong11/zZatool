@@ -45,4 +45,15 @@ public class QuizServiceImpl implements QuizService {
                 .viewList(selectedViewDTO)
                 .build();
     }
+
+    @Override
+    public void addQuiz(QuizDTO quizDTO) {
+        quizRepository.save(
+                Quiz.builder()
+                        .quizContent(quizDTO.quizContent())
+                        .quizImage(quizDTO.quizImage())
+                        .quizNo(quizDTO.quizNo())
+                        .testId(quizDTO.testId())
+                        .build());
+    }
 }
