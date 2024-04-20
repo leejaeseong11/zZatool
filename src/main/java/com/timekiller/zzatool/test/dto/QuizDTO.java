@@ -2,6 +2,7 @@ package com.timekiller.zzatool.test.dto;
 
 import lombok.Builder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record QuizDTO(
@@ -12,5 +13,9 @@ public record QuizDTO(
         Long testId,
         List<ViewDTO> viewList) {
     @Builder
-    public QuizDTO {}
+    public QuizDTO {
+        if (viewList == null) {
+            viewList = new ArrayList<>();
+        }
+    }
 }

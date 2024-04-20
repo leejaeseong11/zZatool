@@ -1,9 +1,17 @@
 package com.timekiller.zzatool.test.dto;
 
-import lombok.Builder;
+import lombok.*;
 
-public record ViewDTO(
-        Long viewId, String viewContent, Long quizId, Integer viewNumber, Integer isCorrect) {
-    @Builder
-    public ViewDTO {}
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ViewDTO {
+    private Long viewId;
+    private String viewContent;
+    private Long quizId;
+    private Integer viewNumber;
+    private Integer isCorrect;
 }

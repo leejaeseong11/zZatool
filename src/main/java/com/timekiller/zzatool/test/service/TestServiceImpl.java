@@ -280,7 +280,7 @@ public class TestServiceImpl implements TestService {
                     new Comparator<ViewDTO>() {
                         @Override
                         public int compare(ViewDTO v1, ViewDTO v2) {
-                            return v1.viewNumber() - v2.viewNumber();
+                            return v1.getViewNumber() - v2.getViewNumber();
                         }
                     });
 

@@ -23,24 +23,25 @@ public class QuizController {
     @GetMapping("/test/{testId}/quiz/add")
     public String addForm(
             @PathVariable("testId") int testId,
-            @RequestParam(value = "viewCount", defaultValue = "1") int viewCount,
+            @RequestParam("viewCount") int viewCount,
             Model model) {
         List<ViewDTO> viewList = new ArrayList<>();
-        viewList.add(ViewDTO.builder().isCorrect(1).build());
-        for (int i = 1; i < viewCount; i++) {
-            viewList.add(ViewDTO.builder().build());
+        for (int i = 0; i < viewCount; i++) {
+            if (i == 0) {
+                viewList.add(ViewDTO.builder().isCorrect(1).build());
+            } else {
+                viewList.add(ViewDTO.builder().build());
+            }
         }
         QuizDTO quizDTO = QuizDTO.builder().viewList(viewList).build();
-        log.info("viewList={}", viewList);
-        log.info("viewList={}", quizDTO);
         model.addAttribute("quiz", quizDTO);
+        model.addAttribute("testId", testId);
         return "quiz/form";
     }
 
     @PostMapping("/test/{testId}/quiz/add")
-    public String add(@ModelAttribute QuizDTO quizDTO) {
-        log.info("id={}", quizDTO.quizId());
-        quizService.addQuiz(QuizDTO.builder().build());
-        return "redirect:/";
+    public String add(@PathVariable("testId") int testId, @ModelAttribute QuizDTO quizDTO) {
+        quizService.addQuiz(quizDTO);
+        return "redirect:/test/" + testId + "/quiz/add?viewCount=" + quizDTO.viewList().size();
     }
 }
