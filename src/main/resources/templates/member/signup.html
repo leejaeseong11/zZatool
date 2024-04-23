@@ -11,21 +11,23 @@
 <form action="/member/signup" method="post">
     <div>
         <label>이메일</label>
-        <input type="text" id="email" placeholder="이메일" onchange="emailOnChange()"/>
+        <input type="text" id="email" placeholder="이메일" oninput="emailOnInput()"/>
         <button type="button" th:onclick = "emailDupChk()">중복확인</button>
     </div>
     <div>
         <label>닉네임</label>
-        <input type="text" id="nickname" placeholder="닉네임" onchange="nicknameOnChange()" />
+        <input type="text" id="nickname" placeholder="닉네임" oninput="nicknameOnInput()" />
         <button type="button" th:onclick = "nicknameDupChk()">중복확인</button>
     </div>
     <div>
         <label>비밀번호</label>
-        <input type="password" id="pwd" placeholder="비밀번호" />
+        <input type="password" id="pwd" placeholder="비밀번호" oninput="pwdOnInput()"/>
+        <span id="pwdmessage" style="display:none">영문, 숫자, 특수문자 조합 8~16자로 입력해주세요.</span>
     </div>
     <div>
         <label>비밀번호 확인</label>
-        <input type="password" id="pwd2" placeholder="비밀번호 확인" />
+        <input type="password" id="pwd2" placeholder="비밀번호 확인" oninput="pwd2OnInput()"/>
+        <span id="pwdmessage2" style="display:none">비밀번호가 일치하지 않습니다.</span>
     </div>
     <button type="submit" id = "signupBtn" disabled >회원가입</button>
 </form>

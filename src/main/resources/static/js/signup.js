@@ -1,5 +1,6 @@
 let emailchk = false;
 let nicknamechk = false;
+let pwdchk = false;
 
 function emailDupChk(){
     const email = document.getElementById('email').value; // 이메일 입력란의 값을 가져옴
@@ -45,21 +46,53 @@ function nicknameDupChk(){
     });
 }
 
-function emailOnChange(){
+function emailOnInput(){
     emailchk = false;
     updateSignupButtonState();
 }
 
-function nicknameOnChange(){
+function nicknameOnInput(){
     nicknamechk = false;
     updateSignupButtonState();
 }
 
+function pwdOnInput(){
+    pwdchk = false;
+    document.getElementById('pwdmessage').style.display = 'block';
+    var pwd = document.getElementById('pwd').value;
+
+    if(strongPassword(pwd)){
+        document.getElementById('pwdmessage').style.display = 'none';
+    }
+    updateSignupButtonState();
+}
+
+function pwd2OnInput(){
+    pwdchk = false;
+    document.getElementById('pwdmessage2').style.display = 'block';
+    var pwd = document.getElementById('pwd').value;
+    var pwd2 = document.getElementById('pwd2').value;
+    if(strongPassword(pwd) && isMatch(pwd,pwd2)){
+        document.getElementById('pwdmessage2').style.display = 'none';
+        pwdchk = true;
+    }else{
+        pwdchk = false;
+    }
+    updateSignupButtonState();
+}
+
 function updateSignupButtonState() {
-    // 이메일과 닉네임의 중복 여부를 모두 확인하고 나서 버튼을 활성화 또는 비활성화합니다.
-    if(emailchk && nicknamechk) {
+    if(emailchk && nicknamechk && pwdchk) {
         document.getElementById('signupBtn').disabled = false;
     } else {
         document.getElementById('signupBtn').disabled = true;
     }
+}
+
+function strongPassword (str) {
+  return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,16}$/.test(str);
+}
+
+function isMatch (pwd, pwd2) {
+  return pwd === pwd2;
 }
