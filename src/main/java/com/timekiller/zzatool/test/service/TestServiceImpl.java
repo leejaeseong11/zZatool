@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -96,7 +95,24 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public void createTest(TestDTO testDTO, MultipartFile testImage) {}
+    public Test createTest(TestDTO testDTO) throws Exception {
+        String testImage = "";
+        if (!testDTO.testImageFile().isEmpty()) {
+            try {
+                testImage =
+                        awsS3Service.uploadImage(testDTO.testImageFile(), profileImageUploadPath);
+            } catch (Exception e) {
+                throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
+            }
+        }
+        return testRepository.save(
+                Test.builder()
+                        .testTitle(testDTO.testTitle())
+                        .testDate(new Date(System.currentTimeMillis()))
+                        .testImage(testImage)
+                        .memberId(1L) // todo: change user id
+                        .build());
+    }
 
     //    @Override
     //    public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws

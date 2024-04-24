@@ -3,9 +3,11 @@ package com.timekiller.zzatool.test.control;
 import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.MyTestDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
+import com.timekiller.zzatool.test.entity.Test;
 import com.timekiller.zzatool.test.service.TestService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class TestController {
     private static final int CONTENT_SIZE = 20;
     private static final int MY_TEST_CONTENT_SIZE = 9;
@@ -100,8 +103,13 @@ public class TestController {
     }
 
     @PostMapping("/test/add")
-    public String add(@ModelAttribute TestDTO testDTO) {
-        return "test/" + testDTO.testId() + "/quiz/add";
+    public String add(@ModelAttribute TestDTO testDTO) throws Exception {
+        log.info("file={}", testDTO.testImageFile());
+        log.info("file={}", testDTO.testImageFile().getName());
+        log.info("file={}", testDTO.testImageFile().isEmpty());
+        log.info("file={}", testDTO.testImage());
+        Test savedTest = testService.createTest(testDTO);
+        return "redirect:/test/" + savedTest.getTestId() + "/quiz/add?viewCount=0";
     }
 
     //    @PostMapping("/test")

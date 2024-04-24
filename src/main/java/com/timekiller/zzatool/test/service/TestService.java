@@ -3,10 +3,10 @@ package com.timekiller.zzatool.test.service;
 import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.MyTestDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
+import com.timekiller.zzatool.test.entity.Test;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public interface TestService {
     Long countSearchTest(String search);
 
     /* 사용자가 테스트를 생성 */
-    void createTest(TestDTO testDTO, MultipartFile testImage);
+    Test createTest(TestDTO testDTO) throws Exception;
 
     //    /**
     //     * 사용자가 테스트를 생성할 수 있다.
