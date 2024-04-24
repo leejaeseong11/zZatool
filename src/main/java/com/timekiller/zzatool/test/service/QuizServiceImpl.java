@@ -122,7 +122,11 @@ public class QuizServiceImpl implements QuizService {
                             .findById(viewDTO.getViewId())
                             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 보기입니다."));
             updateView.modifyViewContent(viewDTO.getViewContent());
-            updateView.modifyIsCorrect(viewDTO.getIsCorrect());
+            int isCorrect = 0;
+            if (viewDTO.getIsCorrect() != null) {
+                isCorrect = 1;
+            }
+            updateView.modifyIsCorrect(isCorrect);
             viewRepository.save(updateView);
             updatedViewList.add(updateView);
         }
