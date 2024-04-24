@@ -57,6 +57,7 @@ public class QuizServiceImpl implements QuizService {
     @Override
     public void createQuiz(QuizDTO quizDTO) throws Exception {
         List<View> viewList = new ArrayList<>();
+        Integer quizNo = quizRepository.countByTestId(quizDTO.testId()) + 1;
 
         String quizImage = "";
         if (!quizDTO.quizImageFile().isEmpty()) {
@@ -73,7 +74,7 @@ public class QuizServiceImpl implements QuizService {
                         Quiz.builder()
                                 .quizContent(quizDTO.quizContent())
                                 .quizImage(quizImage)
-                                .quizNo(quizDTO.quizNo())
+                                .quizNo(quizNo)
                                 .testId(quizDTO.testId())
                                 .viewList(viewList)
                                 .build());
