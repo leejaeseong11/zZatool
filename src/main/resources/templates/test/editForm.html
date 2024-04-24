@@ -2,23 +2,23 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
     <title>짜툴</title>
-    <link rel="stylesheet" th:href="@{/css/test/form.css}">
+    <link rel="stylesheet" th:href="@{/css/test/editForm.css}">
 </head>
-<script th:src="@{/js/test/form.js}"></script>
+<script th:src="@{/js/test/editForm.js}"></script>
 <body>
 <div th:insert="~{fragment/navigation :: copy}"></div>
 <form class="test-form-container" enctype="multipart/form-data" method="post" th:action th:object="${test}">
     <div class="mb-3">
-        <label class="form-label" for="exampleFormControlInput1">테스트 제목</label>
+        <label class="form-label" for="exampleFormControlInput1">테스트 제목 수정</label>
         <input class="form-control" id="exampleFormControlInput1" th:field="*{testTitle}" type="text">
     </div>
     <div class="mb-3">
-        <label class="form-label" for="formFile">대표 이미지</label>
+        <label class="form-label" for="formFile">대표 이미지 수정</label>
         <input class="form-control" id="formFile" onchange="readURL(this);" th:field="*{testImageFile}" type="file">
-        <img id="preview"/>
+        <img id="preview" th:alt="${test.testTitle}" th:src="${test.testImage}">
     </div>
 
-    <button class="btn btn-primary" type="submit">퀴즈 만들기</button>
+    <button class="btn btn-primary" type="submit">수정하기</button>
 </form>
 </body>
 </html>

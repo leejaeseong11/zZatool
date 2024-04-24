@@ -27,8 +27,8 @@ public class ReportController {
     @GetMapping("/add")
     public String form(
             Model model,
-            @RequestParam(value = "quiz_id", required = false) Long quizId,
-            @RequestParam(value = "test_id", required = false) Long testId) {
+            @RequestParam(value = "quizId", required = false) Long quizId,
+            @RequestParam(value = "testId", required = false) Long testId) {
         String reportType;
         if (quizId != null) {
             reportType = "quiz";

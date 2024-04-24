@@ -7,5 +7,8 @@ public interface QuizService {
     QuizDTO findQuiz(Long quizId);
 
     /* 퀴즈 추가 */
-    void addQuiz(QuizDTO quizDTO);
+    void createQuiz(QuizDTO quizDTO) throws Exception;
+
+    /* 퀴즈 수정 */
+    void updateQuiz(Long quizId, QuizDTO quizDTO) throws Exception;
 }

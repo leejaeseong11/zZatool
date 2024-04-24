@@ -28,6 +28,9 @@ public interface TestService {
     /* 사용자가 테스트를 생성 */
     Test createTest(TestDTO testDTO) throws Exception;
 
+    /* 테스트 수정 */
+    void updateTest(Long testId, TestDTO testDTO) throws Exception;
+
     //    /**
     //     * 사용자가 테스트를 생성할 수 있다.
     //     *

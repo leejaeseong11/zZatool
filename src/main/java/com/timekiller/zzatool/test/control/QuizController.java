@@ -40,8 +40,26 @@ public class QuizController {
     }
 
     @PostMapping("/test/{testId}/quiz/add")
-    public String add(@PathVariable("testId") int testId, @ModelAttribute QuizDTO quizDTO) {
-        quizService.addQuiz(quizDTO);
+    public String add(@PathVariable("testId") int testId, @ModelAttribute QuizDTO quizDTO)
+            throws Exception {
+        log.info("quizDTO={}", quizDTO);
+        quizService.createQuiz(quizDTO);
         return "redirect:/test/" + testId + "/quiz/add?viewCount=" + quizDTO.viewList().size();
+    }
+
+    @GetMapping("/quiz/{quizId}/edit")
+    public String editForm(@PathVariable("quizId") Long quizId, Model model) {
+        QuizDTO findQuiz = quizService.findQuiz(quizId);
+        model.addAttribute("quiz", findQuiz);
+
+        return "quiz/editForm";
+    }
+
+    @PostMapping("/quiz/{quizId}/edit")
+    public String edit(@ModelAttribute QuizDTO quizDTO, @PathVariable("quizId") Long quizId)
+            throws Exception {
+        log.info("viewlist={}", quizDTO.viewList());
+        quizService.updateQuiz(quizId, quizDTO);
+        return "redirect:/test/" + quizDTO.testId();
     }
 }

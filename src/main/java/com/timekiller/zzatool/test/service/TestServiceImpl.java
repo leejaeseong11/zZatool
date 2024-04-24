@@ -116,6 +116,27 @@ public class TestServiceImpl implements TestService {
                         .build());
     }
 
+    @Override
+    public void updateTest(Long testId, TestDTO testDTO) throws Exception {
+        Test findTest =
+                testRepository
+                        .findById(testId)
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트입니다."));
+
+        if (!testDTO.testImageFile().isEmpty()) {
+            try {
+                String testImage =
+                        awsS3Service.uploadImage(testDTO.testImageFile(), profileImageUploadPath);
+                findTest.modifyTestImage(testImage);
+
+            } catch (Exception e) {
+                throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
+            }
+        }
+        findTest.modifyTestTitle(testDTO.testTitle());
+        testRepository.save(findTest);
+    }
+
     //    @Override
     //    public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws
     // Exception {

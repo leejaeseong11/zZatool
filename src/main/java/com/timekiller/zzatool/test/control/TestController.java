@@ -111,6 +111,21 @@ public class TestController {
         return "redirect:/test/" + savedTest.getTestId() + "/quiz/add?viewCount=0";
     }
 
+    @GetMapping("/test/{testId}/edit")
+    public String editForm(Model model, @PathVariable("testId") Long testId) {
+        TestDTO findTest = testService.findTest(testId);
+        model.addAttribute("test", findTest);
+
+        return "test/editForm";
+    }
+
+    @PostMapping("/test/{testId}/edit")
+    public String edit(@ModelAttribute TestDTO testDTO, @PathVariable("testId") Long testId)
+            throws Exception {
+        testService.updateTest(testId, testDTO);
+        return "redirect:/test/" + testId;
+    }
+
     //    @PostMapping("/test")
     //    public ResponseEntity<?> createTest(
     //            @RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
