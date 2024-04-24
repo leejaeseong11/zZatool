@@ -64,11 +64,14 @@ public class TestRepositoryCustomImpl implements TestRepositoryCustom {
     }
 
     @Override
-    public Long countSearchTest(String search) {
+    public Long countSearchTest(TestSearchCond testSearchCond) {
         return jpaQueryFactory
                 .select(test.count())
                 .from(test)
-                .where(likeSearchKeyword(search))
+                .where(
+                        test.testStatus.eq(testSearchCond.getTestStatus()),
+                        likeSearchKeyword(testSearchCond.getSearch()),
+                        limitDate(testSearchCond.getDate()))
                 .fetchFirst();
     }
 }

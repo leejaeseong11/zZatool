@@ -23,7 +23,7 @@ public interface TestService {
     TestDTO findTest(Long testId);
 
     /* 검색된 테스트 개수 */
-    Long countSearchTest(String search);
+    Long countSearchTest(Integer testStatus, String search, String sort, String date);
 
     /* 사용자가 테스트를 생성 */
     Test createTest(TestDTO testDTO) throws Exception;

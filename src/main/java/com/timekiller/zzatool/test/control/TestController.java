@@ -61,7 +61,7 @@ public class TestController {
             @RequestParam(value = "search", defaultValue = "") String search,
             @RequestParam(value = "sort", defaultValue = "new") String sort,
             @RequestParam(value = "date", defaultValue = "all") String date) {
-        this.totalTestCount = testService.countSearchTest(search);
+        this.totalTestCount = testService.countSearchTest(1, search, sort, date);
         this.totalPage = (int) Math.ceil((double) this.totalTestCount / CONTENT_SIZE);
         if (page >= this.totalPage) {
             page = Math.max(this.totalPage - 1, 0);
@@ -89,6 +89,9 @@ public class TestController {
             endPage = Math.max((int) Math.ceil((double) totalTestCount / CONTENT_SIZE), 1);
             isLastPage = true;
         }
+
+        log.info("endpage={}", endPage);
+        log.info("totalTestCount={}", totalTestCount);
         model.addAttribute("endPage", endPage);
         model.addAttribute("isLastPage", isLastPage);
 
@@ -104,10 +107,6 @@ public class TestController {
 
     @PostMapping("/test/add")
     public String add(@ModelAttribute TestDTO testDTO) throws Exception {
-        log.info("file={}", testDTO.testImageFile());
-        log.info("file={}", testDTO.testImageFile().getName());
-        log.info("file={}", testDTO.testImageFile().isEmpty());
-        log.info("file={}", testDTO.testImage());
         Test savedTest = testService.createTest(testDTO);
         return "redirect:/test/" + savedTest.getTestId() + "/quiz/add?viewCount=0";
     }

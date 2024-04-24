@@ -68,8 +68,9 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Long countSearchTest(String search) {
-        return testRepositoryCustom.countSearchTest(search);
+    public Long countSearchTest(Integer testStatus, String search, String sort, String date) {
+        TestSearchCond testSearchCond = new TestSearchCond(testStatus, search, sort, date);
+        return testRepositoryCustom.countSearchTest(testSearchCond);
     }
 
     private TestDTO testEntityToDTO(Test testEntity) {
