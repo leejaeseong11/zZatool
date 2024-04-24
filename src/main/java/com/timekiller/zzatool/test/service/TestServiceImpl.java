@@ -111,6 +111,7 @@ public class TestServiceImpl implements TestService {
                         .testDate(new Date(System.currentTimeMillis()))
                         .testImage(testImage)
                         .memberId(1L) // todo: change user id
+                        .testStatus(1)
                         .build());
     }
 
