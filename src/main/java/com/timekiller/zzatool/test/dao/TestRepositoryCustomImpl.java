@@ -5,6 +5,7 @@ import static com.timekiller.zzatool.test.entity.QTest.*;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.timekiller.zzatool.hashtag.entity.Hashtag;
 import com.timekiller.zzatool.test.entity.Test;
 
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,11 @@ public class TestRepositoryCustomImpl implements TestRepositoryCustom {
         if (StringUtils.hasText(search)) {
             return test.testTitle
                     .like("%" + search + "%")
-                    .or(test.hashtagList.any().tagContent.eq(search));
+                    .or(
+                            test.hashtagList
+                                    .any()
+                                    .tagContent
+                                    .eq(Hashtag.builder().tagContent(search).build()));
         }
         return null;
     }

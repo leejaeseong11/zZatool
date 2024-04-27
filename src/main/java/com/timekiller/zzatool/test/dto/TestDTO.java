@@ -17,6 +17,7 @@ public record TestDTO(
         Long testCount,
         Integer testStatus,
         MultipartFile testImageFile,
+        String hashtagString,
         List<HashtagDTO> hashtagList,
         List<CommentDTO> commentList,
         List<QuizDTO> quizList) {

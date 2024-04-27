@@ -4,6 +4,7 @@ import com.timekiller.zzatool.exception.RemoveException;
 import com.timekiller.zzatool.test.dto.MyTestDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.entity.Test;
+import com.timekiller.zzatool.test.service.HashtagService;
 import com.timekiller.zzatool.test.service.TestService;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class TestController {
     private static final int MY_TEST_CONTENT_SIZE = 9;
     private static final int PAGE_SIZE = 5;
     private final TestService testService;
+    private final HashtagService hashtagService;
     private int totalPage;
     private long totalTestCount;
 
@@ -108,6 +110,12 @@ public class TestController {
     @PostMapping("/test/add")
     public String add(@ModelAttribute TestDTO testDTO) throws Exception {
         Test savedTest = testService.createTest(testDTO);
+        String[] hashtagList = testDTO.hashtagString().split(" ");
+        for (String s : hashtagList) {
+            log.info("hashtag={}", s);
+            hashtagService.addHashtag(savedTest.getTestId(), s);
+        }
+
         return "redirect:/test/" + savedTest.getTestId() + "/quiz/add?viewCount=0";
     }
 

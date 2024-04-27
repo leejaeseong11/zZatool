@@ -2,12 +2,15 @@ package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.common.service.AwsS3Service;
 import com.timekiller.zzatool.exception.RemoveException;
+import com.timekiller.zzatool.hashtag.entity.Hashtag;
 import com.timekiller.zzatool.member.dao.MemberRepository;
 import com.timekiller.zzatool.test.dao.TestRepository;
 import com.timekiller.zzatool.test.dao.TestRepositoryCustom;
 import com.timekiller.zzatool.test.dao.TestSearchCond;
 import com.timekiller.zzatool.test.dto.*;
 import com.timekiller.zzatool.test.entity.*;
+
+import io.micrometer.common.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -80,7 +83,7 @@ public class TestServiceImpl implements TestService {
                     HashtagDTO.builder()
                             .testHashtagId(hashtag.getTestHashtagId())
                             .testId(hashtag.getTestId())
-                            .tagContent(hashtag.getTagContent())
+                            .tagContent(hashtag.getTagContent().getTagContent())
                             .build());
         }
         return TestDTO.builder()
@@ -106,6 +109,17 @@ public class TestServiceImpl implements TestService {
                 throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
             }
         }
+        List<TestHashtag> testHashtagList = new ArrayList<>();
+        if (StringUtils.isNotEmpty(testDTO.hashtagString())) {
+            String[] inputHashtag = testDTO.hashtagString().split(" ");
+            for (String hashtag : inputHashtag) {
+                testHashtagList.add(
+                        TestHashtag.builder()
+                                .tagContent(Hashtag.builder().tagContent(hashtag).build())
+                                .testId(testDTO.testId())
+                                .build());
+            }
+        }
         return testRepository.save(
                 Test.builder()
                         .testTitle(testDTO.testTitle())
@@ -113,6 +127,7 @@ public class TestServiceImpl implements TestService {
                         .testImage(testImage)
                         .memberId(1L) // todo: change user id
                         .testStatus(1)
+                        .hashtagList(testHashtagList)
                         .build());
     }
 
@@ -247,7 +262,7 @@ public class TestServiceImpl implements TestService {
             HashtagDTO hashtagDTO =
                     HashtagDTO.builder()
                             .testHashtagId(hashtag.getTestHashtagId())
-                            .tagContent(hashtag.getTagContent())
+                            .tagContent(hashtag.getTagContent().getTagContent())
                             .build();
             hashtagDTOList.add(hashtagDTO);
         }
