@@ -5,5 +5,5 @@ public interface HashtagService {
     void addHashtag(Long testId, String tagContent);
 
     /* 해시태그 삭제 */
-    void removeHashtag(String tagContent);
+    void removeHashtag(Long testId);
 }

@@ -1,6 +1,7 @@
 package com.timekiller.zzatool.test.control;
 
 import com.timekiller.zzatool.exception.RemoveException;
+import com.timekiller.zzatool.test.dto.HashtagDTO;
 import com.timekiller.zzatool.test.dto.MyTestDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
 import com.timekiller.zzatool.test.entity.Test;
@@ -112,7 +113,6 @@ public class TestController {
         Test savedTest = testService.createTest(testDTO);
         String[] hashtagList = testDTO.hashtagString().split(" ");
         for (String s : hashtagList) {
-            log.info("hashtag={}", s);
             hashtagService.addHashtag(savedTest.getTestId(), s);
         }
 
@@ -122,6 +122,12 @@ public class TestController {
     @GetMapping("/test/{testId}/edit")
     public String editForm(Model model, @PathVariable("testId") Long testId) {
         TestDTO findTest = testService.findTest(testId);
+
+        StringBuilder hashtagToString = new StringBuilder();
+        for (HashtagDTO hl : findTest.hashtagList()) {
+            hashtagToString.append(hl.tagContent()).append(" ");
+        }
+        model.addAttribute("hashtagToString", hashtagToString.toString());
         model.addAttribute("test", findTest);
 
         return "test/editForm";
@@ -131,6 +137,11 @@ public class TestController {
     public String edit(@ModelAttribute TestDTO testDTO, @PathVariable("testId") Long testId)
             throws Exception {
         testService.updateTest(testId, testDTO);
+        hashtagService.removeHashtag(testId);
+        String[] hashtagList = testDTO.hashtagString().split(" ");
+        for (String s : hashtagList) {
+            hashtagService.addHashtag(testId, s);
+        }
         return "redirect:/test/" + testId;
     }
 

@@ -17,6 +17,11 @@
         <input class="form-control" id="formFile" onchange="readURL(this);" th:field="*{testImageFile}" type="file">
         <img id="preview" th:alt="${test.testTitle}" th:src="${test.testImage}">
     </div>
+    <div class="mb-3">
+        <label class="form-label" for="exampleFormControlInput2">해시태그(띄어쓰기로 구분)</label>
+        <input class="form-control" id="exampleFormControlInput2" th:name="hashtagString" th:value="${hashtagToString}"
+               type="text">
+    </div>
 
     <button class="btn btn-primary" type="submit">수정하기</button>
 </form>

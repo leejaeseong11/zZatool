@@ -8,9 +8,11 @@ import com.timekiller.zzatool.test.entity.TestHashtag;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class HashtagServiceImpl implements HashtagService {
     private final HashtagRepository hashtagRepository;
     private final TagRepository tagRepository;
@@ -26,5 +28,7 @@ public class HashtagServiceImpl implements HashtagService {
     }
 
     @Override
-    public void removeHashtag(String tagContent) {}
+    public void removeHashtag(Long testId) {
+        hashtagRepository.deleteByTestId(testId);
+    }
 }
