@@ -59,4 +59,16 @@ public class Quiz {
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "quiz_id")
     private List<View> viewList;
+
+    public void modifyQuizImage(String quizImage) {
+        this.quizImage = quizImage;
+    }
+
+    public void modifyQuizContent(String quizContent) {
+        this.quizContent = quizContent;
+    }
+
+    public void modifyViewList(List<View> viewList) {
+        this.viewList = viewList;
+    }
 }

@@ -2,6 +2,7 @@ package com.timekiller.zzatool.test.service;
 
 import com.timekiller.zzatool.common.service.AwsS3Service;
 import com.timekiller.zzatool.exception.RemoveException;
+import com.timekiller.zzatool.hashtag.entity.Hashtag;
 import com.timekiller.zzatool.member.dao.MemberRepository;
 import com.timekiller.zzatool.test.dao.TestRepository;
 import com.timekiller.zzatool.test.dao.TestRepositoryCustom;
@@ -9,14 +10,14 @@ import com.timekiller.zzatool.test.dao.TestSearchCond;
 import com.timekiller.zzatool.test.dto.*;
 import com.timekiller.zzatool.test.entity.*;
 
+import io.micrometer.common.util.StringUtils;
+
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Service
@@ -70,8 +71,9 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Long countSearchTest(String search) {
-        return testRepositoryCustom.countSearchTest(search);
+    public Long countSearchTest(Integer testStatus, String search, String sort, String date) {
+        TestSearchCond testSearchCond = new TestSearchCond(testStatus, search, sort, date);
+        return testRepositoryCustom.countSearchTest(testSearchCond);
     }
 
     private TestDTO testEntityToDTO(Test testEntity) {
@@ -81,7 +83,7 @@ public class TestServiceImpl implements TestService {
                     HashtagDTO.builder()
                             .testHashtagId(hashtag.getTestHashtagId())
                             .testId(hashtag.getTestId())
-                            .tagContent(hashtag.getTagContent())
+                            .tagContent(hashtag.getTagContent().getTagContent())
                             .build());
         }
         return TestDTO.builder()
@@ -97,27 +99,82 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws Exception {
-        try {
-            if (!Objects.isNull(testImage)) {
-                String imageUrl = awsS3Service.uploadImage(testImage, profileImageUploadPath);
-                testCreateDTO.setTestImage(imageUrl);
+    public Test createTest(TestDTO testDTO) throws Exception {
+        String testImage = "";
+        if (!testDTO.testImageFile().isEmpty()) {
+            try {
+                testImage =
+                        awsS3Service.uploadImage(testDTO.testImageFile(), profileImageUploadPath);
+            } catch (Exception e) {
+                throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
             }
-
-            Test test =
-                    Test.builder()
-                            .testTitle(testCreateDTO.getTestTitle())
-                            .testDate(testCreateDTO.getTestDate())
-                            .testImage(testCreateDTO.getTestImage())
-                            .memberId(testCreateDTO.getMemberId())
-                            .build();
-
-            testRepository.save(test);
-        } catch (Exception e) {
-            logger.log(Level.INFO, "테스트 생성 실패", e);
-            throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
         }
+        List<TestHashtag> testHashtagList = new ArrayList<>();
+        if (StringUtils.isNotEmpty(testDTO.hashtagString())) {
+            String[] inputHashtag = testDTO.hashtagString().split(" ");
+            for (String hashtag : inputHashtag) {
+                testHashtagList.add(
+                        TestHashtag.builder()
+                                .tagContent(Hashtag.builder().tagContent(hashtag).build())
+                                .testId(testDTO.testId())
+                                .build());
+            }
+        }
+        return testRepository.save(
+                Test.builder()
+                        .testTitle(testDTO.testTitle())
+                        .testDate(new Date(System.currentTimeMillis()))
+                        .testImage(testImage)
+                        .memberId(1L) // todo: change user id
+                        .testStatus(1)
+                        .hashtagList(testHashtagList)
+                        .build());
     }
+
+    @Override
+    public void updateTest(Long testId, TestDTO testDTO) throws Exception {
+        Test findTest =
+                testRepository
+                        .findById(testId)
+                        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 테스트입니다."));
+
+        if (!testDTO.testImageFile().isEmpty()) {
+            try {
+                String testImage =
+                        awsS3Service.uploadImage(testDTO.testImageFile(), profileImageUploadPath);
+                findTest.modifyTestImage(testImage);
+
+            } catch (Exception e) {
+                throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
+            }
+        }
+        findTest.modifyTestTitle(testDTO.testTitle());
+        testRepository.save(findTest);
+    }
+
+    //    @Override
+    //    public void createTest(TestCreateDTO testCreateDTO, MultipartFile testImage) throws
+    // Exception {
+    //        try {
+    //            if (!Objects.isNull(testImage)) {
+    //                String imageUrl = awsS3Service.uploadImage(testImage, profileImageUploadPath);
+    //                testCreateDTO.setTestImage(imageUrl);
+    //            }
+    //
+    //            Test test =
+    //                    Test.builder()
+    //                            .testTitle(testCreateDTO.getTestTitle())
+    //                            .testDate(testCreateDTO.getTestDate())
+    //                            .testImage(testCreateDTO.getTestImage())
+    //                            .memberId(testCreateDTO.getMemberId())
+    //                            .build();
+    //
+    //            testRepository.save(test);
+    //        } catch (Exception e) {
+    //            logger.log(Level.INFO, "테스트 생성 실패", e);
+    //            throw new Exception("테스트 생성 실패: " + e.getMessage(), e);
+    //        }
+    //    }
 
     @Override
     public void deleteTest(Long testId, Long memberId) throws RemoveException {
@@ -205,7 +262,7 @@ public class TestServiceImpl implements TestService {
             HashtagDTO hashtagDTO =
                     HashtagDTO.builder()
                             .testHashtagId(hashtag.getTestHashtagId())
-                            .tagContent(hashtag.getTagContent())
+                            .tagContent(hashtag.getTagContent().getTagContent())
                             .build();
             hashtagDTOList.add(hashtagDTO);
         }
@@ -277,7 +334,7 @@ public class TestServiceImpl implements TestService {
                     new Comparator<ViewDTO>() {
                         @Override
                         public int compare(ViewDTO v1, ViewDTO v2) {
-                            return v1.viewNumber() - v2.viewNumber();
+                            return v1.getViewNumber() - v2.getViewNumber();
                         }
                     });
 

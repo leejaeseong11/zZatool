@@ -71,4 +71,12 @@ public class Test {
     @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @JoinColumn(name = "test_id")
     private List<TestHashtag> hashtagList;
+
+    public void modifyTestImage(String testImage) {
+        this.testImage = testImage;
+    }
+
+    public void modifyTestTitle(String testTitle) {
+        this.testTitle = testTitle;
+    }
 }

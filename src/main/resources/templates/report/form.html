@@ -11,8 +11,8 @@
     <div th:if="${reportType eq 'quiz'}">
         <h3>퀴즈 신고</h3>
         <div th:text="${pageTitle}">테스트 제목</div>
-        <div th:text="${quiz.quizNo} + '. ' + ${quiz.quizContent}">퀴즈 내용</div>
-        <img th:alt="'퀴즈 이미지'" th:if="${not #strings.isEmpty(quiz.quizImage)}">
+        <div th:text="${quiz.quizNo} + '번. ' + ${quiz.quizContent}">퀴즈 내용</div>
+        <img th:alt="'퀴즈 이미지'" th:if="${not #strings.isEmpty(quiz.quizImage)}" th:src="${quiz.quizImage}">
         <div class="form-check" th:each="view : ${quiz.viewList}">
             <input class="form-check-input" disabled th:checked="${view.isCorrect}"
                    type="checkbox" value="">

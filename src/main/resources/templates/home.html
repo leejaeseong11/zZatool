@@ -7,54 +7,57 @@
 <script th:src="@{/js/home.js}"></script>
 <body>
 <div th:insert="~{fragment/navigation :: copy}"></div>
+<div class="nav-container">
+    <div class="nav-search-container">
+        <div class="sort-button-container">
+            <input autocomplete="off" class="btn-check" id="new" name="sort" th:checked="${sort} == 'new'"
+                   th:onclick="setHref([[${link}]], 'sort', 'new')"
+                   type="radio">
+            <label class="btn btn-outline-primary" for="new">최신순</label>
 
-<div class="nav-search-container">
-    <div class="sort-button-container">
-        <input autocomplete="off" class="btn-check" id="new" name="sort" th:checked="${sort} == 'new'"
-               th:onclick="setHref([[${link}]], 'sort', 'new')"
-               type="radio">
-        <label class="btn btn-outline-primary" for="new">최신순</label>
+            <input autocomplete="off" class="btn-check" id="hot" name="sort" th:checked="${sort} == 'hot'"
+                   th:onclick="setHref([[${link}]], 'sort', 'hot')" type="radio">
+            <label class="btn btn-outline-primary" for="hot">인기순</label>
+        </div>
 
-        <input autocomplete="off" class="btn-check" id="hot" name="sort" th:checked="${sort} == 'hot'"
-               th:onclick="setHref([[${link}]], 'sort', 'hot')" type="radio">
-        <label class="btn btn-outline-primary" for="hot">인기순</label>
+        <div class="date-button-container">
+            <input autocomplete="off" class="btn-check" id="all" name="date" th:checked="${date} == 'all'"
+                   th:onclick="setHref([[${link}]], 'date', 'all')"
+                   type="radio">
+            <label class="btn btn-outline-primary" for="all">전체</label>
+
+            <input autocomplete="off" class="btn-check" id="day" name="date" th:checked="${date} == '1'"
+                   th:onclick="setHref([[${link}]], 'date', '1')"
+                   type="radio">
+            <label class="btn btn-outline-primary" for="day">일</label>
+
+            <input autocomplete="off" class="btn-check" id="week" name="date" th:checked="${date} == '7'"
+                   th:onclick="setHref([[${link}]], 'date', '7')"
+                   type="radio">
+            <label class="btn btn-outline-primary" for="week">주</label>
+            <input autocomplete="off" class="btn-check" id="month" name="date" th:checked="${date} == '30'"
+                   th:onclick="setHref([[${link}]], 'date', '30')"
+                   type="radio">
+            <label class="btn btn-outline-primary" for="month">월</label>
+        </div>
+
+        <div class="input-group" id="main-search-container">
+            <input aria-describedby="button-search shadow-none" aria-label="테스트 제목 또는 태그를 검색하세요." class="form-control"
+                   id="search-input"
+                   placeholder="테스트 제목 또는 태그를 검색하세요."
+                   th:onkeyup="enterKey([[${link}]], 'search', document.getElementById('search-input').value)"
+                   th:value="${search}"
+                   type="text">
+            <button class="btn btn-primary" id="button-search"
+                    th:onclick="setHref([[${link}]], 'search', document.getElementById('search-input').value)"
+                    type="button">검색
+            </button>
+        </div>
     </div>
-
-    <div class="date-button-container">
-        <input autocomplete="off" class="btn-check" id="all" name="date" th:checked="${date} == 'all'"
-               th:onclick="setHref([[${link}]], 'date', 'all')"
-               type="radio">
-        <label class="btn btn-outline-primary" for="all">전체</label>
-
-        <input autocomplete="off" class="btn-check" id="day" name="date" th:checked="${date} == '1'"
-               th:onclick="setHref([[${link}]], 'date', '1')"
-               type="radio">
-        <label class="btn btn-outline-primary" for="day">일</label>
-
-        <input autocomplete="off" class="btn-check" id="week" name="date" th:checked="${date} == '7'"
-               th:onclick="setHref([[${link}]], 'date', '7')"
-               type="radio">
-        <label class="btn btn-outline-primary" for="week">주</label>
-        <input autocomplete="off" class="btn-check" id="month" name="date" th:checked="${date} == '30'"
-               th:onclick="setHref([[${link}]], 'date', '30')"
-               type="radio">
-        <label class="btn btn-outline-primary" for="month">월</label>
-    </div>
-
-    <div class="input-group" id="main-search-container">
-        <input aria-describedby="button-search shadow-none" aria-label="테스트 제목 또는 태그를 검색하세요." class="form-control"
-               id="search-input"
-               placeholder="테스트 제목 또는 태그를 검색하세요."
-               th:onkeyup="enterKey([[${link}]], 'search', document.getElementById('search-input').value)"
-               th:value="${search}"
-               type="text">
-        <button class="btn btn-primary" id="button-search"
-                th:onclick="setHref([[${link}]], 'search', document.getElementById('search-input').value)"
-                type="button">검색
-        </button>
+    <div>
+        <a class="btn btn-primary" href="/test/add">테스트 만들기</a>
     </div>
 </div>
-
 <div class="test-card-container">
     <div class="card" style="width: 18rem;" th:each="test : ${tests}">
         <div class="card-body">

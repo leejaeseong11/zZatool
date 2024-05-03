@@ -23,10 +23,10 @@
         <td th:text="${report.reportReason}">신고사유</td>
         <td><a th:href="'/test/' + ${report.testId}">링크</a></td>
         <td th:if="${report.quizId != null}">
-            <a class="btn btn-primary" th:href="'/admin/editQuiz/' + ${report.quizId}">퀴즈 수정</a>
+            <a class="btn btn-primary" th:href="'/quiz/' + ${report.quizId} + '/edit'">퀴즈 수정</a>
         </td>
         <td th:if="${report.quizId == null}">
-            <a class="btn btn-primary" th:href="'/admin/editTest/' + ${report.testId}">테스트 수정</a>
+            <a class="btn btn-primary" th:href="'/test/' + ${report.testId} + '/edit'">테스트 수정</a>
         </td>
     </tr>
     </tbody>
