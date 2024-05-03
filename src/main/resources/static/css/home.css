@@ -48,8 +48,3 @@
 .active, .active a {
     cursor: default;
 }
-
-.nav-container {
-    display: flex;
-
-}

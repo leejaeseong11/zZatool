@@ -42,12 +42,4 @@ public class View {
     // 정답 여부
     @Column(name = "is_correct")
     private Integer isCorrect;
-
-    public void modifyViewContent(String viewContent) {
-        this.viewContent = viewContent;
-    }
-
-    public void modifyIsCorrect(Integer isCorrect) {
-        this.isCorrect = isCorrect;
-    }
 }

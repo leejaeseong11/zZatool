@@ -1,15 +1,12 @@
 package com.timekiller.zzatool.test.control;
 
 import com.timekiller.zzatool.exception.RemoveException;
-import com.timekiller.zzatool.test.dto.HashtagDTO;
 import com.timekiller.zzatool.test.dto.MyTestDTO;
+import com.timekiller.zzatool.test.dto.TestCreateDTO;
 import com.timekiller.zzatool.test.dto.TestDTO;
-import com.timekiller.zzatool.test.entity.Test;
-import com.timekiller.zzatool.test.service.HashtagService;
 import com.timekiller.zzatool.test.service.TestService;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,18 +15,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@Slf4j
 public class TestController {
     private static final int CONTENT_SIZE = 20;
     private static final int MY_TEST_CONTENT_SIZE = 9;
     private static final int PAGE_SIZE = 5;
     private final TestService testService;
-    private final HashtagService hashtagService;
     private int totalPage;
     private long totalTestCount;
 
@@ -64,7 +60,7 @@ public class TestController {
             @RequestParam(value = "search", defaultValue = "") String search,
             @RequestParam(value = "sort", defaultValue = "new") String sort,
             @RequestParam(value = "date", defaultValue = "all") String date) {
-        this.totalTestCount = testService.countSearchTest(1, search, sort, date);
+        this.totalTestCount = testService.countSearchTest(search);
         this.totalPage = (int) Math.ceil((double) this.totalTestCount / CONTENT_SIZE);
         if (page >= this.totalPage) {
             page = Math.max(this.totalPage - 1, 0);
@@ -92,70 +88,23 @@ public class TestController {
             endPage = Math.max((int) Math.ceil((double) totalTestCount / CONTENT_SIZE), 1);
             isLastPage = true;
         }
-
-        log.info("endpage={}", endPage);
-        log.info("totalTestCount={}", totalTestCount);
         model.addAttribute("endPage", endPage);
         model.addAttribute("isLastPage", isLastPage);
 
         return "home";
     }
 
-    @GetMapping("/test/add")
-    public String addForm(Model model) {
-        model.addAttribute("test", TestDTO.builder().build());
-
-        return "test/form";
-    }
-
-    @PostMapping("/test/add")
-    public String add(@ModelAttribute TestDTO testDTO) throws Exception {
-        Test savedTest = testService.createTest(testDTO);
-        String[] hashtagList = testDTO.hashtagString().split(" ");
-        for (String s : hashtagList) {
-            hashtagService.addHashtag(savedTest.getTestId(), s);
+    @PostMapping("/test")
+    public ResponseEntity<?> createTest(
+            @RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
+            @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
+        try {
+            testService.createTest(testCreateDTO, testImage);
+            return ResponseEntity.ok().body("테스트 생성이 완료되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("테스트 생성에 실패했습니다.");
         }
-
-        return "redirect:/test/" + savedTest.getTestId() + "/quiz/add?viewCount=0";
     }
-
-    @GetMapping("/test/{testId}/edit")
-    public String editForm(Model model, @PathVariable("testId") Long testId) {
-        TestDTO findTest = testService.findTest(testId);
-
-        StringBuilder hashtagToString = new StringBuilder();
-        for (HashtagDTO hl : findTest.hashtagList()) {
-            hashtagToString.append(hl.tagContent()).append(" ");
-        }
-        model.addAttribute("hashtagToString", hashtagToString.toString());
-        model.addAttribute("test", findTest);
-
-        return "test/editForm";
-    }
-
-    @PostMapping("/test/{testId}/edit")
-    public String edit(@ModelAttribute TestDTO testDTO, @PathVariable("testId") Long testId)
-            throws Exception {
-        testService.updateTest(testId, testDTO);
-        hashtagService.removeHashtag(testId);
-        String[] hashtagList = testDTO.hashtagString().split(" ");
-        for (String s : hashtagList) {
-            hashtagService.addHashtag(testId, s);
-        }
-        return "redirect:/test/" + testId;
-    }
-
-    //    @PostMapping("/test")
-    //    public ResponseEntity<?> createTest(
-    //            @RequestPart(name = "testDTO") TestCreateDTO testCreateDTO,
-    //            @RequestPart(name = "testImage", required = false) MultipartFile testImage) {
-    //        try {
-    //            testService.createTest(testCreateDTO, testImage);
-    //            return ResponseEntity.ok().body("테스트 생성이 완료되었습니다.");
-    //        } catch (Exception e) {
-    //            return ResponseEntity.badRequest().body("테스트 생성에 실패했습니다.");
-    //        }
-    //    }
 
     @DeleteMapping("/test/{testId}")
     public ResponseEntity<?> deleteTest(@PathVariable Long testId, @RequestParam Long memberId) {

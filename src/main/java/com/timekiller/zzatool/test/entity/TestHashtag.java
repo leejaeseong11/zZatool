@@ -1,7 +1,5 @@
 package com.timekiller.zzatool.test.entity;
 
-import com.timekiller.zzatool.hashtag.entity.Hashtag;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -24,7 +22,7 @@ public class TestHashtag {
     @NotNull
     private Long testId;
 
-    @ManyToOne
-    @JoinColumn(name = "tag_content")
-    private Hashtag tagContent;
+    @Column(name = "tag_content")
+    @NotNull
+    private String tagContent;
 }
