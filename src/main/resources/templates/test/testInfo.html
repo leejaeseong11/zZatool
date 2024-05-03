@@ -31,7 +31,7 @@
 
     <div class="test-start-div">
         <button class="btn btn-primary" style="width: 200px; font-size: x-large;"
-                th:onclick="goToSolve([[${test.testId}]])">
+                th:onclick="goToSolve([[${link}]], [[${test.testId}]])">
             시작하기
         </button>
     </div>

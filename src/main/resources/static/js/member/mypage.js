@@ -11,9 +11,9 @@ function goTest(url, memberId, order, page) {
 }
 
 function goResultInfo(resultId) {
-    console.log(resultId)
+    location.href = '/result/' + resultId;
 }
 
 function goTestInfo(testId) {
-    console.log(testId)
+    location.href = '/test/' + testId;
 }

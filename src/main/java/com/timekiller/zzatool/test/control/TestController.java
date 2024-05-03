@@ -209,6 +209,7 @@ public class TestController {
     @GetMapping("test/{testId}")
     public String testInfo(@PathVariable("testId") Long testId, Model model) throws Exception {
         model.addAttribute("testId", testId);
+        model.addAttribute("link", "/test/start");
 
         try {
             TestDTO testDTO = testService.findTestByTestId(testId);
