@@ -1,5 +1,5 @@
-function goToSolve(testId) {
-    console.log(testId);
+function goToSolve(url, testId) {
+    location.href = url + '/' + testId;
 }
 
 function shareThis() {
