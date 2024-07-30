@@ -4,6 +4,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+db.properties
+application-local.properties
 
 ### STS ###
 .apt_generated
@@ -16,6 +18,10 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+
+### QFile ###
+**/src/main/generated
+**/src/test/generated
 
 ### IntelliJ IDEA ###
 .idea
@@ -35,3 +41,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### mac DS_Store ###
+.DS_Store

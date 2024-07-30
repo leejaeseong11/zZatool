@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
+    <meta charset="UTF-8">
+    <title>짜툴 : 마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/member/mypage.css}"/>
+    <link rel="stylesheet" th:href="@{/css/member/myTest.css}"/>
+</head>
+<script th:src="@{/js/member/mypage.js}"></script>
+<body>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
+<div class="mypage-bar">
+    내가 만든 테스트
+</div>
+
+<div class="mypage-content">
+    <div class="mypage-menu-bar">
+        <div class="mypage-menu" th:onclick="reload([[${link}]], [[${memberId}]])">
+            회원 정보 수정
+        </div>
+
+        <div class="mypage-menu" th:onclick="goResult([[${link}]], [[${memberId}]], '1')">
+            내가 푼 테스트
+        </div>
+
+        <div class="mypage-menu" th:onclick="goTest([[${link}]], [[${memberId}]], 'date', '1')">
+            내가 만든 테스트
+        </div>
+
+        <div class="mypage-menu">
+            회원 탈퇴
+        </div>
+    </div>
+
+    <div class="mypage-content-page">
+        <div class="sort-option">
+            <input autocomplete="off" class="btn-check" id="new" name="sort" th:checked="${order} == 'date'"
+                   th:onclick="goTest([[${link}]], [[${memberId}]], 'date', '1')"
+                   type="radio">
+            <label class="btn btn-outline-secondary" for="new">최신순</label>
+
+            <input autocomplete="off" class="btn-check" id="hot" name="sort" th:checked="${order} == 'count'"
+                   th:onclick="goTest([[${link}]], [[${memberId}]], 'count', '1')" type="radio">
+            <label class="btn btn-outline-secondary" for="hot">인기순</label>
+        </div>
+
+        <span class="card" th:each="test : ${tests}">
+            <div class="card-body">
+                <h4 class="test-title" th:text="${test.testTitle}" th:title="${test.testTitle}"></h4>
+                <h5 class="test-count" th:text="'조회수 : '+${test.testCount}"></h5>
+                <span class="test-date"
+                      th:text="${#dates.format(test.testDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </div>
+            <div class="btn-area">
+                <button class="btn btn-primary" th:onclick="goTestInfo([[${test.testId}]])">테스트 보러 가기</button>
+            </div>
+        </span>
+    </div>
+</div>
+
+<nav aria-label="Page navigation example" id="page-button">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${isFirstPage}? 'disabled' : ''">
+            <a class="page-link"
+               th:onclick="goTest([[${link}]], [[${memberId}]], [[${order}]], [[${page} - 5 - ${page}%5]])">이전</a>
+        </li>
+        <li class="page-item" th:each="pageIndex: ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link" th:classappend="${page} == ${pageIndex}? 'active' : ''"
+               th:onclick="goTest([[${link}]], [[${memberId}]], [[${order}]], [[${pageIndex}]])"
+               th:text="${pageIndex}">0</a>
+        </li>
+        <li class="page-item" th:classappend="${isLastPage}? 'disabled' : ''">
+            <a class="page-link"
+               th:onclick="goTest([[${link}]], [[${memberId}]], [[${order}]], [[${page} + 5 - ${page}%5]])">다음</a>
+        </li>
+    </ul>
+</nav>
+
+<footer>푸터 가져오기</footer>
+</body>
+</html>

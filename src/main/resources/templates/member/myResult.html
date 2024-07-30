@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragment/base :: common_header (~{::title},~{::link})}">
+    <meta charset="UTF-8">
+    <title>짜툴 : 마이페이지</title>
+    <link rel="stylesheet" th:href="@{/css/member/mypage.css}"/>
+    <link rel="stylesheet" th:href="@{/css/member/myResult.css}"/>
+</head>
+<script th:src="@{/js/member/mypage.js}"></script>
+<body>
+<div th:insert="~{fragment/navigation :: copy}"></div>
+
+<div class="mypage-bar">
+    내가 푼 테스트
+</div>
+
+<div class="mypage-content">
+    <div class="mypage-menu-bar">
+        <div class="mypage-menu" th:onclick="reload([[${link}]], [[${memberId}]])">
+            회원 정보 수정
+        </div>
+
+        <div class="mypage-menu" th:onclick="goResult([[${link}]], [[${memberId}]], '1')">
+            내가 푼 테스트
+        </div>
+
+        <div class="mypage-menu" th:onclick="goTest([[${link}]], [[${memberId}]], 'date', '1')">
+            내가 만든 테스트
+        </div>
+
+        <div class="mypage-menu">
+            회원 탈퇴
+        </div>
+    </div>
+
+    <div class="mypage-content-page">
+        <span class="card" th:each="result : ${results}">
+            <div class="card-body">
+                <h4 class="result-title" th:text="${result.testTitle}" th:title="${result.testTitle}"></h4>
+                <h5 class="result-score" th:text="${result.resultScore}+'점'"></h5>
+                <span class="result-date"
+                      th:text="${#dates.format(result.resultDate, 'yyyy-MM-dd HH:mm')}"></span>
+            </div>
+            <div class="btn-area">
+                <button class="btn btn-primary" th:onclick="goResultInfo([[${result.resultId}]])">결과 다시 보기</button>
+            </div>
+        </span>
+    </div>
+</div>
+
+<nav aria-label="Page navigation example" id="page-button">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:classappend="${isFirstPage}? 'disabled' : ''">
+            <a class="page-link"
+               th:onclick="goResult([[${link}]], [[${memberId}]], [[${page} - 5 - ${page}%5]])">이전</a>
+        </li>
+        <li class="page-item" th:each="pageIndex: ${#numbers.sequence(startPage, endPage)}">
+            <a class="page-link" th:classappend="${page} == ${pageIndex}? 'active' : ''"
+               th:onclick="goResult([[${link}]], [[${memberId}]], [[${pageIndex}]])"
+               th:text="${pageIndex}">0</a>
+        </li>
+        <li class="page-item" th:classappend="${isLastPage}? 'disabled' : ''">
+            <a class="page-link"
+               th:onclick="goResult([[${link}]], [[${memberId}]], [[${page} + 5 - ${page}%5]])">다음</a>
+        </li>
+    </ul>
+</nav>
+
+<footer>푸터 가져오기</footer>
+</body>
+</html>

@@ -1,0 +1,31 @@
+.sort-option {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn btn-secondary {
+    display: inline-block;
+}
+
+.card {
+    width: 20rem;
+    padding: 10px;
+    font-size: large;
+    display: inline-block;
+    margin-right: 30px;
+    margin-bottom: 20px;
+}
+
+.btn-area {
+    text-align: center;
+}
+
+.test-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#page-button {
+    margin-top: 30px;
+}
